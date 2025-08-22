@@ -1,0 +1,287 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:page_transition/page_transition.dart';
+
+import '../AppColors/app_colors.dart';
+import '../bloc/api_data/api_db_bloc.dart';
+import '../bloc/api_data/api_db_events.dart';
+import '../bloc/api_data/api_db_states.dart';
+import '../bloc/dark_theme_mode/dark_theme_bloc.dart';
+import '../bloc/dark_theme_mode/dark_theme_event.dart';
+import '../bloc/dark_theme_mode/dark_theme_state.dart';
+import '../custom_widgets/custom_container.dart';
+import '../custom_widgets/custom_fab.dart';
+import '../custom_widgets/custom_text.dart';
+import '../utils/enums.dart';
+import 'new_order_page.dart';
+
+class HomePage extends StatelessWidget {
+  const HomePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: BlocBuilder<DarkThemeBloc, DarkThemeState>(
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              leading: Icon(Icons.list, size: 30, color: Colors.white),
+              title: CustomText(
+                text: "Order List",
+                textSize: 30,
+                textBoldness: FontWeight.bold,
+                textColor: Colors.white,
+              ),
+              actions: [
+                Switch(
+                  padding: EdgeInsets.only(right: 30),
+                  trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
+                  activeTrackColor: Colors.grey.shade800,
+                  inactiveTrackColor: Colors.blue.shade100,
+                  activeThumbImage: AssetImage("assets/images/dark_mode.jpg"),
+                  inactiveThumbImage: AssetImage(
+                    "assets/images/light_mode.png",
+                  ),
+                  value: state.darkTheme,
+                  onChanged: (value) {
+                    context.read<DarkThemeBloc>().add(
+                      DarkModeToggleAndPreference(darkModeToggle: value),
+                    );
+                  },
+                ),
+              ],
+            ),
+            body: BlocBuilder<DarkThemeBloc, DarkThemeState>(
+              builder: (context, darkModeState) {
+                return BlocBuilder<APIDataBaseBloc, APIDataBaseStates>(
+                  builder: (context, apiDbState) {
+                    final dataList = apiDbState.dataList;
+                    if (apiDbState.apiStatus == Status.loading) {
+                      return Center(child: CircularProgressIndicator());
+                    } else if (apiDbState.apiStatus == Status.failure) {
+                      return Center(child: Text(apiDbState.message.toString()));
+                    } else {
+                      return CustomContainer(
+                        child: Column(
+                          children: [
+                            CustomContainer(
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: 15.0,
+                                  right: 10.0,
+                                  top: 10.0,
+                                  bottom: 7.0,
+                                ),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomText(
+                                      text: "Order Details",
+                                      textSize: 28,
+                                    ),
+                                    Card(
+                                      elevation: 6,
+                                      color: darkModeState.darkTheme
+                                          ? AppColor.darkThemeColor
+                                          : AppColor.lightThemeColor,
+                                      child: DropdownButton(
+                                        dropdownColor: darkModeState.darkTheme
+                                            ? AppColor.darkThemeColor
+                                            : AppColor.lightThemeColor,
+                                        icon: Icon(Icons.tune),
+                                        iconSize: 28,
+                                        padding: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                        ),
+                                        borderRadius: BorderRadius.circular(10),
+                                        value: apiDbState.filter,
+                                        alignment: Alignment.centerLeft,
+                                        underline: SizedBox.shrink(),
+                                        items: [
+                                          DropdownMenuItem(
+                                            value: Filters.all,
+                                            child: CustomText(
+                                              text: "All Orders",
+                                            ),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: Filters.today,
+                                            child: CustomText(
+                                              text: "Today Orders",
+                                            ),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: Filters.pending,
+                                            child: CustomText(
+                                              text: "Pending Orders",
+                                            ),
+                                          ),
+                                          DropdownMenuItem(
+                                            value: Filters.delivered,
+                                            child: CustomText(
+                                              text: "Delivered Orders",
+                                            ),
+                                          ),
+                                        ],
+                                        onChanged: (value) {
+                                          if (value != null) {
+                                            context.read<APIDataBaseBloc>().add(
+                                              ApplyFilter(filter: value),
+                                            );
+                                          }
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                            dataList.isEmpty
+                                ? Expanded(
+                                    child: Center(
+                                      child: CustomText(
+                                        textSize: 30,
+                                        text:
+                                            "No order ${apiDbState.filter.name}",
+                                      ),
+                                    ),
+                                  )
+                                : Expanded(
+                                    child: ListView.separated(
+                                      itemCount: dataList.length,
+                                      padding: EdgeInsets.only(
+                                        top: 3,
+                                        left: 10,
+                                        right: 10,
+                                        bottom: 80,
+                                      ),
+                                      separatorBuilder: (context, index) =>
+                                          Padding(
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 10.0,
+                                            ),
+                                            child: Divider(
+                                              color: darkModeState.darkTheme
+                                                  ? AppColor.dividerDarkColor
+                                                  : AppColor.dividerLightColor,
+                                            ),
+                                          ),
+                                      itemBuilder: (context, index) => Card(
+                                        elevation: 6,
+                                        color: darkModeState.darkTheme
+                                            ? AppColor.darkThemeColor
+                                            : AppColor.lightThemeColor,
+                                        child: ListTile(
+                                          isThreeLine: true,
+                                          leading: CustomText(
+                                            textSize: 20,
+                                            text: (index + 1).toString(),
+                                          ),
+
+                                          title: CustomText(
+                                            textSize: 20,
+                                            text: dataList[index].customer
+                                                .toString(),
+                                          ),
+                                          subtitle: CustomText(
+                                            textSize: 16,
+                                            text:
+                                                '${dataList[index].date} \n₹ ${dataList[index].amount}',
+                                          ),
+                                          trailing: Row(
+                                            spacing: 5,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CustomContainer(
+                                                height: 25,
+                                                width: 85,
+                                                backgroundColor:
+                                                    dataList[index].status ==
+                                                        "Delivered"
+                                                    ? Colors.green
+                                                    : Colors.orange,
+                                                borderRadius: 20,
+                                                child: Center(
+                                                  child: CustomText(
+                                                    text: dataList[index].status
+                                                        .toString(),
+                                                    textSize: 15,
+                                                    textColor: Colors.white,
+                                                    textBoldness:
+                                                        FontWeight.bold,
+                                                  ),
+                                                ),
+                                              ),
+                                              IconButton(
+                                                highlightColor:
+                                                    Colors.red.shade200,
+                                                onPressed: () {
+                                                  context
+                                                      .read<APIDataBaseBloc>()
+                                                      .add(
+                                                        DeleteItem(
+                                                          id: dataList[index]
+                                                              .id,
+                                                        ),
+                                                      );
+                                                },
+                                                icon: Icon(
+                                                  Icons.delete,
+                                                  color: Colors.redAccent,
+                                                  size: 30,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                          ],
+                        ),
+                      );
+                    }
+                  },
+                );
+              },
+            ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+            floatingActionButton:
+                BlocBuilder<APIDataBaseBloc, APIDataBaseStates>(
+                  builder: (context, apiDbState) {
+                    return BlocBuilder<DarkThemeBloc, DarkThemeState>(
+                      builder: (context, darkModeState) {
+                        if (apiDbState.apiStatus == Status.loading ||
+                            apiDbState.apiStatus == Status.failure) {
+                          return SizedBox.shrink();
+                        } else {
+                          return CustomButton(
+                            height: 50,
+                            backgroundColor: darkModeState.darkTheme
+                                ? AppColor.buttonDarkThemeColor
+                                : AppColor.buttonLightThemeColor,
+                            width: MediaQuery.of(context).size.width / 2,
+                            buttonText: "Add New Order",
+                            callback: () {
+                              Navigator.push(
+                                context,
+                                PageTransition(
+                                  type: PageTransitionType.rightToLeftWithFade,
+                                  child: NewSalesOrderPage(),
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      },
+                    );
+                  },
+                ),
+          );
+        },
+      ),
+    );
+  }
+}
