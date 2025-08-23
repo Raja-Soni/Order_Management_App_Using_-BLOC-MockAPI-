@@ -94,6 +94,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             },
                           ),
                           DropdownButton(
+                            iconSize: 40,
                             dropdownColor: darkModeState.darkTheme
                                 ? AppColor.darkThemeColor
                                 : AppColor.lightThemeColor,
@@ -193,7 +194,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               Icons.check_circle,
                                               color: Colors.green,
                                             ),
-                                            CustomText(text: "Order Added"),
+                                            CustomText(
+                                              text: "Order Added",
+                                              textBoldness: FontWeight.bold,
+                                            ),
                                           ],
                                         ),
                                         duration: Duration(milliseconds: 600),
@@ -238,7 +242,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                       spacing: 10,
                                       children: [
                                         Icon(Icons.cancel, color: Colors.red),
-                                        CustomText(text: "Failed to add order"),
+                                        CustomText(
+                                          text: "Failed to add order",
+                                          textBoldness: FontWeight.bold,
+                                        ),
                                       ],
                                     ),
                                     duration: Duration(milliseconds: 600),

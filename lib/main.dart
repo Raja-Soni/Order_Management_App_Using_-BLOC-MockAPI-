@@ -112,11 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
                             ? AppColor.darkThemeColor
                             : AppColor.lightThemeColor,
                         buttonTextColor: darkThemeState.darkTheme
-                            ? AppColor.lightThemeColor
-                            : AppColor.darkThemeColor,
+                            ? AppColor.alertBtnTextDarkColor
+                            : AppColor.alertBtnTextLightColor,
                         confirmationButtonColor: darkThemeState.darkTheme
-                            ? AppColor.buttonDarkThemeColor
-                            : AppColor.lightThemeColor,
+                            ? AppColor.alertBtnDarkColor
+                            : AppColor.alertBtnLightColor,
                         title: title,
                         message: message,
                       ),

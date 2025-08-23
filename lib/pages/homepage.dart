@@ -57,7 +57,13 @@ class HomePage extends StatelessWidget {
                   builder: (context, apiDbState) {
                     final dataList = apiDbState.dataList;
                     if (apiDbState.apiStatus == Status.loading) {
-                      return Center(child: CircularProgressIndicator());
+                      return Center(
+                        child: CircularProgressIndicator(
+                          color: darkModeState.darkTheme
+                              ? AppColor.circularProgressDarkColor
+                              : AppColor.circularProgressLightColor,
+                        ),
+                      );
                     } else if (apiDbState.apiStatus == Status.failure) {
                       return Center(child: Text(apiDbState.message.toString()));
                     } else {
@@ -175,8 +181,8 @@ class HomePage extends StatelessWidget {
                                         child: ListTile(
                                           isThreeLine: true,
                                           leading: CustomText(
-                                            textSize: 20,
-                                            text: (index + 1).toString(),
+                                            textSize: 25,
+                                            text: "${(index + 1).toString()})",
                                           ),
 
                                           title: CustomText(
