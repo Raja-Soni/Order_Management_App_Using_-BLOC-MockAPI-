@@ -221,6 +221,12 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                         context.read<AlertPopUpBloc>().add(
                                           LimitCrossedPopupShown(show: false),
                                         );
+                                        context.read<AlertPopUpBloc>().add(
+                                          InitHighOrderAlert(
+                                            name: newOrderState.name,
+                                            amount: newOrderState.totalPrice,
+                                          ),
+                                        );
                                       }
                                       Navigator.pop(context);
                                     });

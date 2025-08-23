@@ -79,6 +79,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
+    context.read<AlertPopUpBloc>().add(GetHighOrderAlert());
     context.read<APIDataBaseBloc>().add(FetchOnlineData());
     context.read<DarkThemeBloc>().add(GetDarkModePreference());
   }
@@ -101,29 +102,26 @@ class _MyHomePageState extends State<MyHomePage> {
               old.limitCrossedOrders != latest.limitCrossedOrders,
           listener: (context, alertPopUpState) {
             bool pendingPopUpShown = alertPopUpState.pendingPopUpShow;
-            if (!pendingPopUpShown) {
+            void showPopUP(String title, String message) {
               WidgetsBinding.instance.addPostFrameCallback((_) {
-                int pendingOrders = alertPopUpState.pendingOrders;
-                int totalPendingAmount =
-                    alertPopUpState.totalPendingOrderAmount;
                 showDialog(
                   context: context,
-                  builder: (context) => BlocBuilder<DarkThemeBloc, DarkThemeState>(
-                    builder: (context, darkThemeState) => CustomAlertBox(
-                      backgroundColor: darkThemeState.darkTheme
-                          ? AppColor.darkThemeColor
-                          : AppColor.lightThemeColor,
-                      buttonTextColor: darkThemeState.darkTheme
-                          ? AppColor.lightThemeColor
-                          : AppColor.darkThemeColor,
-                      confirmationButtonColor: darkThemeState.darkTheme
-                          ? AppColor.buttonDarkThemeColor
-                          : AppColor.lightThemeColor,
-                      title: "Pending Orders",
-                      message:
-                          "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
-                    ),
-                  ),
+                  builder: (context) =>
+                      BlocBuilder<DarkThemeBloc, DarkThemeState>(
+                        builder: (context, darkThemeState) => CustomAlertBox(
+                          backgroundColor: darkThemeState.darkTheme
+                              ? AppColor.darkThemeColor
+                              : AppColor.lightThemeColor,
+                          buttonTextColor: darkThemeState.darkTheme
+                              ? AppColor.lightThemeColor
+                              : AppColor.darkThemeColor,
+                          confirmationButtonColor: darkThemeState.darkTheme
+                              ? AppColor.buttonDarkThemeColor
+                              : AppColor.lightThemeColor,
+                          title: title,
+                          message: message,
+                        ),
+                      ),
                 ).then((_) {
                   context.read<AlertPopUpBloc>().add(
                     PendingPopupShown(isShown: true),
@@ -131,36 +129,51 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               });
             }
+
+            if (alertPopUpState.lastHighOrderCustomerName.isNotEmpty &&
+                alertPopUpState.lastHighOrderCustomerAmount > 0 &&
+                alertPopUpState.highOrderAlertPopupShow == false) {
+              showPopUP(
+                "High Order Alert",
+                "Last Highest amount Order of ${alertPopUpState.lastHighOrderCustomerAmount} is from ${alertPopUpState.lastHighOrderCustomerName}",
+              );
+              context.read<AlertPopUpBloc>().add(ClearHighOrderAlert());
+              if (!pendingPopUpShown) {
+                int pendingOrders = alertPopUpState.pendingOrders;
+                int totalPendingAmount =
+                    alertPopUpState.totalPendingOrderAmount;
+                showPopUP(
+                  "Pending Orders",
+                  "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
+                );
+                context.read<AlertPopUpBloc>().add(
+                  PendingPopupShown(isShown: true),
+                );
+              }
+            } else {
+              if (!pendingPopUpShown) {
+                int pendingOrders = alertPopUpState.pendingOrders;
+                int totalPendingAmount =
+                    alertPopUpState.totalPendingOrderAmount;
+                showPopUP(
+                  "Pending Orders",
+                  "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
+                );
+                context.read<AlertPopUpBloc>().add(
+                  PendingPopupShown(isShown: true),
+                );
+              }
+            }
             bool limitCrossPopUpShow = alertPopUpState.limitPopUpShow;
             if (limitCrossPopUpShow == false &&
                 alertPopUpState.apiStatus == Status.success) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return BlocBuilder<DarkThemeBloc, DarkThemeState>(
-                      builder: (context, darkThemeState) => CustomAlertBox(
-                        backgroundColor: darkThemeState.darkTheme
-                            ? AppColor.darkThemeColor
-                            : AppColor.lightThemeColor,
-                        buttonTextColor: darkThemeState.darkTheme
-                            ? AppColor.lightThemeColor
-                            : AppColor.darkThemeColor,
-                        confirmationButtonColor: darkThemeState.darkTheme
-                            ? AppColor.buttonDarkThemeColor
-                            : AppColor.lightThemeColor,
-                        title: "High Amount Orders",
-                        message:
-                            "${alertPopUpState.limitCrossedOrders} order's crossed ₹10,000/-",
-                      ),
-                    );
-                  },
-                ).then((_) {
-                  context.read<AlertPopUpBloc>().add(
-                    LimitCrossedPopupShown(show: true),
-                  );
-                });
-              });
+              showPopUP(
+                "High Amount Orders",
+                "${alertPopUpState.limitCrossedOrders} order's crossed ₹10,000/-",
+              );
+              context.read<AlertPopUpBloc>().add(
+                LimitCrossedPopupShown(show: true),
+              );
             }
           },
         ),

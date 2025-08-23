@@ -9,6 +9,9 @@ class AlertPopUpStates extends Equatable {
   final int limitCrossedOrders;
   final int totalPendingOrderAmount;
   final Status apiStatus;
+  final String lastHighOrderCustomerName;
+  final int lastHighOrderCustomerAmount;
+  final bool highOrderAlertPopupShow;
 
   const AlertPopUpStates({
     this.pendingPopUpShow = false,
@@ -17,6 +20,9 @@ class AlertPopUpStates extends Equatable {
     this.limitCrossedOrders = 0,
     this.totalPendingOrderAmount = 0,
     this.apiStatus = Status.loading,
+    this.lastHighOrderCustomerName = "",
+    this.lastHighOrderCustomerAmount = 0,
+    this.highOrderAlertPopupShow = false,
   });
 
   AlertPopUpStates copyWith({
@@ -26,6 +32,9 @@ class AlertPopUpStates extends Equatable {
     int? limitCrossedOrders,
     int? totalPendingOrderAmount,
     Status? apiStatus,
+    String? lastHighOrderCustomerName,
+    int? lastHighOrderCustomerAmount,
+    bool? highOrderAlertPopupShow,
   }) {
     return AlertPopUpStates(
       pendingPopUpShow: pendingPopUpShow ?? this.pendingPopUpShow,
@@ -35,6 +44,12 @@ class AlertPopUpStates extends Equatable {
       totalPendingOrderAmount:
           totalPendingOrderAmount ?? this.totalPendingOrderAmount,
       apiStatus: apiStatus ?? this.apiStatus,
+      lastHighOrderCustomerName:
+          lastHighOrderCustomerName ?? this.lastHighOrderCustomerName,
+      lastHighOrderCustomerAmount:
+          lastHighOrderCustomerAmount ?? this.lastHighOrderCustomerAmount,
+      highOrderAlertPopupShow:
+          highOrderAlertPopupShow ?? this.highOrderAlertPopupShow,
     );
   }
 
@@ -46,5 +61,8 @@ class AlertPopUpStates extends Equatable {
     totalPendingOrderAmount,
     limitCrossedOrders,
     apiStatus,
+    lastHighOrderCustomerName,
+    lastHighOrderCustomerAmount,
+    highOrderAlertPopupShow,
   ];
 }
