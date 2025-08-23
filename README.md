@@ -1,6 +1,6 @@
 # erp_using_mockapi_and_bloc
 
-https://github.com/user-attachments/assets/af3b5442-e26b-4289-86d6-04205f41c35b
+https://github.com/user-attachments/assets/659f4af9-3d5f-40bf-8296-1e006474ed5e
 
 ## ❓ Ques: What is this Project?
 
