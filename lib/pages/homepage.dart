@@ -25,10 +25,10 @@ class HomePage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              leading: Icon(Icons.list, size: 30, color: Colors.white),
+              leading: Icon(Icons.list, size: 40, color: Colors.white),
               title: CustomText(
                 text: "Order List",
-                textSize: 30,
+                textSize: 33,
                 textBoldness: FontWeight.bold,
                 textColor: Colors.white,
               ),
@@ -84,7 +84,7 @@ class HomePage extends StatelessWidget {
                                   children: [
                                     CustomText(
                                       text: "Order Details",
-                                      textSize: 28,
+                                      textSize: 30,
                                     ),
                                     Card(
                                       elevation: 6,
@@ -147,9 +147,10 @@ class HomePage extends StatelessWidget {
                                 ? Expanded(
                                     child: Center(
                                       child: CustomText(
-                                        textSize: 30,
+                                        textSize: 40,
                                         text:
-                                            "No order ${apiDbState.filter.name}",
+                                            "${apiDbState.filter.name.toString().substring(0, 1).toUpperCase() + apiDbState.filter.name.toString().substring(1).toLowerCase()} orders: ${dataList.length}",
+                                        textBoldness: FontWeight.bold,
                                       ),
                                     ),
                                   )
