@@ -102,32 +102,26 @@ class _MyHomePageState extends State<MyHomePage> {
               old.limitCrossedOrders != latest.limitCrossedOrders,
           listener: (context, alertPopUpState) {
             bool pendingPopUpShown = alertPopUpState.pendingPopUpShow;
-            void showPopUP(String title, String message) {
-              WidgetsBinding.instance.addPostFrameCallback((_) {
-                showDialog(
-                  context: context,
-                  builder: (context) =>
-                      BlocBuilder<DarkThemeBloc, DarkThemeState>(
-                        builder: (context, darkThemeState) => CustomAlertBox(
-                          backgroundColor: darkThemeState.darkTheme
-                              ? AppColor.darkThemeColor
-                              : AppColor.lightThemeColor,
-                          buttonTextColor: darkThemeState.darkTheme
-                              ? AppColor.lightThemeColor
-                              : AppColor.darkThemeColor,
-                          confirmationButtonColor: darkThemeState.darkTheme
-                              ? AppColor.buttonDarkThemeColor
-                              : AppColor.lightThemeColor,
-                          title: title,
-                          message: message,
-                        ),
+            Future<void> showPopUP(String title, String message) async {
+              await showDialog(
+                context: context,
+                builder: (context) =>
+                    BlocBuilder<DarkThemeBloc, DarkThemeState>(
+                      builder: (context, darkThemeState) => CustomAlertBox(
+                        backgroundColor: darkThemeState.darkTheme
+                            ? AppColor.darkThemeColor
+                            : AppColor.lightThemeColor,
+                        buttonTextColor: darkThemeState.darkTheme
+                            ? AppColor.lightThemeColor
+                            : AppColor.darkThemeColor,
+                        confirmationButtonColor: darkThemeState.darkTheme
+                            ? AppColor.buttonDarkThemeColor
+                            : AppColor.lightThemeColor,
+                        title: title,
+                        message: message,
                       ),
-                ).then((_) {
-                  context.read<AlertPopUpBloc>().add(
-                    PendingPopupShown(isShown: true),
-                  );
-                });
-              });
+                    ),
+              );
             }
 
             if (alertPopUpState.lastHighOrderCustomerName.isNotEmpty &&
@@ -135,21 +129,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 alertPopUpState.highOrderAlertPopupShow == false) {
               showPopUP(
                 "High Order Alert",
-                "Last Highest amount Order of ${alertPopUpState.lastHighOrderCustomerAmount} is from ${alertPopUpState.lastHighOrderCustomerName}",
-              );
-              context.read<AlertPopUpBloc>().add(ClearHighOrderAlert());
-              if (!pendingPopUpShown) {
-                int pendingOrders = alertPopUpState.pendingOrders;
-                int totalPendingAmount =
-                    alertPopUpState.totalPendingOrderAmount;
-                showPopUP(
-                  "Pending Orders",
-                  "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
-                );
-                context.read<AlertPopUpBloc>().add(
-                  PendingPopupShown(isShown: true),
-                );
-              }
+                "Last Highest amount Order was ₹${alertPopUpState.lastHighOrderCustomerAmount} is from ${alertPopUpState.lastHighOrderCustomerName}",
+              ).then((_) {
+                context.read<AlertPopUpBloc>().add(ClearHighOrderAlert());
+                if (!pendingPopUpShown) {
+                  int pendingOrders = alertPopUpState.pendingOrders;
+                  int totalPendingAmount =
+                      alertPopUpState.totalPendingOrderAmount;
+                  showPopUP(
+                    "Pending Orders",
+                    "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
+                  ).then((_) {
+                    context.read<AlertPopUpBloc>().add(
+                      PendingPopupShown(isShown: true),
+                    );
+                  });
+                }
+              });
             } else {
               if (!pendingPopUpShown) {
                 int pendingOrders = alertPopUpState.pendingOrders;
@@ -158,10 +154,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 showPopUP(
                   "Pending Orders",
                   "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
-                );
-                context.read<AlertPopUpBloc>().add(
-                  PendingPopupShown(isShown: true),
-                );
+                ).then((_) {
+                  context.read<AlertPopUpBloc>().add(
+                    PendingPopupShown(isShown: true),
+                  );
+                });
               }
             }
             bool limitCrossPopUpShow = alertPopUpState.limitPopUpShow;
@@ -170,10 +167,11 @@ class _MyHomePageState extends State<MyHomePage> {
               showPopUP(
                 "High Amount Orders",
                 "${alertPopUpState.limitCrossedOrders} order's crossed ₹10,000/-",
-              );
-              context.read<AlertPopUpBloc>().add(
-                LimitCrossedPopupShown(show: true),
-              );
+              ).then((_) {
+                context.read<AlertPopUpBloc>().add(
+                  LimitCrossedPopupShown(show: true),
+                );
+              });
             }
           },
         ),

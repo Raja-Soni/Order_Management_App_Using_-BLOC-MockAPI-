@@ -193,7 +193,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               Icons.check_circle,
                                               color: Colors.green,
                                             ),
-                                            Text("Order Added"),
+                                            CustomText(text: "Order Added"),
                                           ],
                                         ),
                                         duration: Duration(milliseconds: 600),
