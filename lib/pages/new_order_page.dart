@@ -187,6 +187,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                     .showSnackBar(
                                       SnackBar(
                                         content: Row(
+                                          spacing: 10,
                                           children: [
                                             Icon(
                                               Icons.check_circle,
