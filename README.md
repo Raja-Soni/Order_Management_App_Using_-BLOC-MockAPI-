@@ -4,9 +4,7 @@ https://github.com/user-attachments/assets/af3b5442-e26b-4289-86d6-04205f41c35b
 
 ## ❓ Ques: What is this Project?
 
-**Ans:**
-
-1. **Sales Order Listing Page**  
+**Ans:** 1. **Sales Order Listing Page**  
    - Pulled sales order data from a mock/dummy API.  
    - Displayed key details: Customer Name, Order Date, Total Amount, and Status (Pending/Delivered).  
    - Added filters such as *Today’s Orders* and *Pending only*.  
@@ -29,7 +27,5 @@ https://github.com/user-attachments/assets/af3b5442-e26b-4289-86d6-04205f41c35b
 
 ## ❓ Ques: What I used?
 
-**Ans:**
-
-1. Implemented **BLoC state management** to separate UI from business logic, enabling predictable state handling, scalability, and a clean architecture for long-term maintainability.  
+**Ans:** 1. Implemented **BLoC state management** to separate UI from business logic, enabling predictable state handling, scalability, and a clean architecture for long-term maintainability.  
 2. Integrated a **Mock API** for simulating backend communication and **SharedPreferences** to persist dark mode preferences, while improving the user experience with daily sales summaries and alerts for high-value orders.  
