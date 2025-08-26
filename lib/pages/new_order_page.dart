@@ -67,6 +67,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
           builder: (context, darkModeState) {
             return BlocBuilder<NewOrderBloc, NewOrderState>(
               builder: (context, newOrderState) {
+                final navigator = Navigator.of(context);
                 return Container(
                   padding: EdgeInsets.all(20),
                   child: SingleChildScrollView(
@@ -217,6 +218,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                             .split(" ")
                                             .first,
                                       );
+                                      if (!context.mounted) return;
                                       context.read<NewOrderBloc>().add(
                                         AddNewOrderEvent(
                                           itemModel: newOrderItem,
@@ -233,7 +235,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                           ),
                                         );
                                       }
-                                      Navigator.pop(context);
+                                      navigator.pop();
                                     });
                               } else {
                                 message.showSnackBar(

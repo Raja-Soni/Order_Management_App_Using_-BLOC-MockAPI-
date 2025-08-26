@@ -131,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "High Order Alert",
                 "Last Highest amount Order was ₹${alertPopUpState.lastHighOrderCustomerAmount} is from ${alertPopUpState.lastHighOrderCustomerName}",
               ).then((_) {
+                if (!context.mounted) return;
                 context.read<AlertPopUpBloc>().add(ClearHighOrderAlert());
                 if (!pendingPopUpShown) {
                   int pendingOrders = alertPopUpState.pendingOrders;
@@ -140,6 +141,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     "Pending Orders",
                     "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
                   ).then((_) {
+                    if (!context.mounted) return;
                     context.read<AlertPopUpBloc>().add(
                       PendingPopupShown(isShown: true),
                     );
@@ -155,6 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   "Pending Orders",
                   "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
                 ).then((_) {
+                  if (!context.mounted) return;
                   context.read<AlertPopUpBloc>().add(
                     PendingPopupShown(isShown: true),
                   );
@@ -168,6 +171,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "High Amount Orders",
                 "${alertPopUpState.limitCrossedOrders} order's crossed ₹10,000/-",
               ).then((_) {
+                if (!context.mounted) return;
                 context.read<AlertPopUpBloc>().add(
                   LimitCrossedPopupShown(show: true),
                 );
