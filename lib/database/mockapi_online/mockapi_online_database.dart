@@ -5,11 +5,14 @@ import 'package:http/http.dart' as http;
 import '../../model/sales_order.dart';
 
 class OnlineDataBase {
-  Future<List<ItemModel>> fetchData() async {
+  Future<List<ItemModel>> fetchData({required int page}) async {
     List<ItemModel> result = [];
     try {
+      int limit = 10;
       final response = await http.get(
-        Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp"),
+        Uri.parse(
+          "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?page=$page&limit=$limit",
+        ),
       );
       if (response.statusCode == 200) {
         final body = json.decode(response.body) as List;

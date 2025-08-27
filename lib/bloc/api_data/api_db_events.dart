@@ -6,6 +6,11 @@ abstract class APIDataBaseEvents {}
 
 class FetchOnlineData extends APIDataBaseEvents {}
 
+class FetchMoreData extends APIDataBaseEvents {
+  int page;
+  FetchMoreData({required this.page});
+}
+
 class ApplyFilter extends APIDataBaseEvents {
   final Filters filter;
   ApplyFilter({required this.filter});
