@@ -18,6 +18,7 @@ class DashboardPage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
+              surfaceTintColor: Colors.transparent,
               leading: Icon(Icons.list, size: 40, color: Colors.white),
               title: CustomText(
                 text: "Order List",
@@ -78,6 +79,9 @@ class DashboardPage extends StatelessWidget {
                                     CustomText(
                                       text: "Order Details",
                                       textSize: 30,
+                                      textColor: darkModeState.darkTheme
+                                          ? AppColor.textDarkThemeColor
+                                          : AppColor.textLightThemeColor,
                                     ),
                                     Card(
                                       elevation: 6,
@@ -85,10 +89,22 @@ class DashboardPage extends StatelessWidget {
                                           ? AppColor.darkThemeColor
                                           : AppColor.lightThemeColor,
                                       child: DropdownButton(
+                                        style: TextStyle(
+                                          color: darkModeState.darkTheme
+                                              ? AppColor.textDarkThemeColor
+                                              : AppColor.textLightThemeColor,
+                                        ),
                                         dropdownColor: darkModeState.darkTheme
                                             ? AppColor.darkThemeColor
                                             : AppColor.lightThemeColor,
-                                        icon: Icon(Icons.tune),
+                                        icon: Icon(
+                                          Icons.tune,
+                                          color: darkModeState.darkTheme
+                                              ? AppColor
+                                                    .filterIconDarkThemeColor
+                                              : AppColor
+                                                    .filterIconLightThemeColor,
+                                        ),
                                         iconSize: 28,
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 10,
@@ -218,17 +234,35 @@ class DashboardPage extends StatelessWidget {
                                                   textSize: 25,
                                                   text:
                                                       "${(index + 1).toString()})",
+                                                  textColor:
+                                                      darkModeState.darkTheme
+                                                      ? AppColor
+                                                            .textDarkThemeColor
+                                                      : AppColor
+                                                            .textLightThemeColor,
                                                 ),
 
                                                 title: CustomText(
                                                   textSize: 20,
                                                   text: dataList[index].customer
                                                       .toString(),
+                                                  textColor:
+                                                      darkModeState.darkTheme
+                                                      ? AppColor
+                                                            .textDarkThemeColor
+                                                      : AppColor
+                                                            .textLightThemeColor,
                                                 ),
                                                 subtitle: CustomText(
                                                   textSize: 16,
                                                   text:
-                                                      '${dataList[index].date} \n₹ ${dataList[index].amount}',
+                                                      '${dataList[index].date} \n₹ ${dataList[index].amount}/-',
+                                                  textColor:
+                                                      darkModeState.darkTheme
+                                                      ? AppColor
+                                                            .textDarkThemeColor
+                                                      : AppColor
+                                                            .textLightThemeColor,
                                                 ),
                                                 trailing: Row(
                                                   crossAxisAlignment:
