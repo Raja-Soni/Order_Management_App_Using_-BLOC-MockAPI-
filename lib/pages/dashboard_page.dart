@@ -105,13 +105,12 @@ class DashboardPage extends StatelessWidget {
                                               : AppColor
                                                     .filterIconLightThemeColor,
                                         ),
-                                        iconSize: 28,
+                                        iconSize: 25,
                                         padding: EdgeInsets.symmetric(
                                           horizontal: 10,
                                         ),
                                         borderRadius: BorderRadius.circular(10),
                                         value: apiDbState.filter,
-                                        alignment: Alignment.centerLeft,
                                         underline: SizedBox.shrink(),
                                         items: [
                                           DropdownMenuItem(
@@ -267,7 +266,7 @@ class DashboardPage extends StatelessWidget {
                                                   children: [
                                                     CustomContainer(
                                                       height: 25,
-                                                      width: 85,
+                                                      width: 90,
                                                       backgroundColor:
                                                           dataList[index]
                                                                   .status ==
@@ -292,8 +291,8 @@ class DashboardPage extends StatelessWidget {
                                                       padding: EdgeInsets.zero,
                                                       alignment:
                                                           AlignmentGeometry.xy(
-                                                            4,
-                                                            4,
+                                                            3.3,
+                                                            3.3,
                                                           ),
                                                       highlightColor:
                                                           Colors.red.shade200,
@@ -312,7 +311,7 @@ class DashboardPage extends StatelessWidget {
                                                       icon: Icon(
                                                         Icons.delete,
                                                         color: Colors.redAccent,
-                                                        size: 35,
+                                                        size: 34,
                                                       ),
                                                     ),
                                                   ],
