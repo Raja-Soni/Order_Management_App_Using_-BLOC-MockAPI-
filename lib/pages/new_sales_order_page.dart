@@ -69,7 +69,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                       key: formKey,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        spacing: 10,
+                        spacing: 15,
                         children: [
                           CustomFormTextField(
                             inputType: TextInputType.name,
@@ -167,10 +167,27 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                               return null;
                             },
                           ),
-                          CustomText(
-                            text: "Total: ₹ ${newOrderState.totalPrice}",
-                            textSize: 25,
-                            textBoldness: FontWeight.w500,
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: CustomText(
+                                    text: "Total Amount: ",
+                                    textSize: 22,
+                                    textBoldness: FontWeight.w500,
+                                  ),
+                                ),
+                                Expanded(
+                                  child: CustomText(
+                                    text: "₹ ${newOrderState.totalPrice}/-",
+                                    textSize: 22,
+                                    textBoldness: FontWeight.w500,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
                           CustomButton(
                             width: MediaQuery.of(context).size.width,

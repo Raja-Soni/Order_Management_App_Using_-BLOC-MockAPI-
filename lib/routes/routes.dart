@@ -1,6 +1,6 @@
 import 'package:erp_using_api/custom_widgets/custom_text.dart';
 import 'package:erp_using_api/main.dart';
-import 'package:erp_using_api/pages/new_order_page.dart';
+import 'package:erp_using_api/pages/new_sales_order_page.dart';
 import 'package:erp_using_api/routes/route_names.dart';
 import 'package:flutter/material.dart';
 import 'package:page_transition/page_transition.dart';

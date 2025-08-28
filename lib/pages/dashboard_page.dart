@@ -229,40 +229,34 @@ class DashboardPage extends StatelessWidget {
                                                   ? AppColor.darkThemeColor
                                                   : AppColor.lightThemeColor,
                                               child: ListTile(
+                                                minLeadingWidth: 0.0,
+                                                textColor:
+                                                    darkModeState.darkTheme
+                                                    ? AppColor
+                                                          .textDarkThemeColor
+                                                    : AppColor
+                                                          .textLightThemeColor,
                                                 isThreeLine: true,
-                                                leading: CustomText(
-                                                  textSize: 25,
-                                                  text:
-                                                      "${(index + 1).toString()})",
-                                                  textColor:
-                                                      darkModeState.darkTheme
-                                                      ? AppColor
-                                                            .textDarkThemeColor
-                                                      : AppColor
-                                                            .textLightThemeColor,
+                                                leading: Padding(
+                                                  padding: EdgeInsets.only(
+                                                    top: 3.0,
+                                                  ),
+                                                  child: CustomText(
+                                                    textSize: 20,
+                                                    text:
+                                                        "${(index + 1).toString()})",
+                                                  ),
                                                 ),
 
                                                 title: CustomText(
                                                   textSize: 20,
                                                   text: dataList[index].customer
                                                       .toString(),
-                                                  textColor:
-                                                      darkModeState.darkTheme
-                                                      ? AppColor
-                                                            .textDarkThemeColor
-                                                      : AppColor
-                                                            .textLightThemeColor,
                                                 ),
                                                 subtitle: CustomText(
                                                   textSize: 16,
                                                   text:
                                                       '${dataList[index].date} \n₹ ${dataList[index].amount}/-',
-                                                  textColor:
-                                                      darkModeState.darkTheme
-                                                      ? AppColor
-                                                            .textDarkThemeColor
-                                                      : AppColor
-                                                            .textLightThemeColor,
                                                 ),
                                                 trailing: Row(
                                                   crossAxisAlignment:
