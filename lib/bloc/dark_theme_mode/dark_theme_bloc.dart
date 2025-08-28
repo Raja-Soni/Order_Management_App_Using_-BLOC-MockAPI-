@@ -1,8 +1,7 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_event.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_state.dart';
+import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DarkThemeBloc extends Bloc<DarkThemeEvents, DarkThemeState> {

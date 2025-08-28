@@ -1,9 +1,8 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_events.dart';
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_state.dart';
-import 'package:erp_using_api/bloc/api_data/api_db_bloc.dart';
+import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
 import 'package:erp_using_api/model/sales_order.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

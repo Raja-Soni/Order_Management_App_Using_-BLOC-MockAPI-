@@ -1,12 +1,10 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:erp_using_api/bloc/api_data/api_db_bloc.dart';
-import 'package:erp_using_api/bloc/new_order/new_order_state.dart';
+import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
 
 import '../../model/sales_order.dart';
-import '../api_data/api_db_events.dart';
-import 'new_order_events.dart';
 
 class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
   APIDataBaseBloc apiBloc;
