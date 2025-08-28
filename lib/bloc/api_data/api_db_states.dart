@@ -9,6 +9,7 @@ class APIDataBaseStates extends Equatable {
   final String message;
   final Filters filter;
   final int page;
+  final int limit;
   final bool hasMoreData;
 
   const APIDataBaseStates({
@@ -18,6 +19,7 @@ class APIDataBaseStates extends Equatable {
     this.filter = Filters.all,
     this.page = 1,
     this.hasMoreData = true,
+    this.limit = 10,
   });
 
   APIDataBaseStates copyWith({
@@ -27,6 +29,7 @@ class APIDataBaseStates extends Equatable {
     Filters? filter,
     int? page,
     bool? hasMoreData,
+    int? limit,
   }) {
     return APIDataBaseStates(
       apiStatus: apiStatus ?? this.apiStatus,
@@ -34,6 +37,7 @@ class APIDataBaseStates extends Equatable {
       message: message ?? this.message,
       filter: filter ?? this.filter,
       page: page ?? this.page,
+      limit: limit ?? this.limit,
       hasMoreData: hasMoreData ?? this.hasMoreData,
     );
   }
@@ -45,6 +49,7 @@ class APIDataBaseStates extends Equatable {
     message,
     filter,
     page,
+    limit,
     hasMoreData,
   ];
 }

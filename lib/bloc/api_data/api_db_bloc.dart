@@ -23,7 +23,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     Emitter<APIDataBaseStates> emit,
   ) async {
     await dataBase
-        .fetchData(page: 1)
+        .fetchData(page: 1, limit: 10)
         .then((value) {
           tempList = List.from(value);
           emit(
@@ -51,7 +51,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     Emitter<APIDataBaseStates> emit,
   ) async {
     await dataBase
-        .fetchData(page: event.page)
+        .fetchData(page: event.page, limit: state.limit)
         .then((value) {
           if (value.isEmpty) {
             emit(state.copyWith(hasMoreData: false));
@@ -115,7 +115,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     emit(state.copyWith(apiStatus: Status.loading));
     String? id = event.id;
     await dataBase.deleteItem(id!);
-    await dataBase.fetchData(page: 1).then((value) {
+    await dataBase.fetchData(page: 1, limit: state.limit).then((value) {
       tempList = List.from(value);
       emit(
         state.copyWith(
@@ -132,7 +132,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
   addItem(AddItem event, Emitter<APIDataBaseStates> emit) async {
     emit(state.copyWith(apiStatus: Status.loading));
     await dataBase.addItem(event.item!);
-    await dataBase.fetchData(page: 1).then((value) {
+    await dataBase.fetchData(page: 1, limit: state.limit).then((value) {
       tempList = List.from(value);
       emit(
         state.copyWith(

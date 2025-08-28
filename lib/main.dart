@@ -125,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alertPopUpState.highOrderAlertPopupShow == false) {
               showPopUP(
                 "High Order Alert",
-                "Last Highest amount Order was ₹${alertPopUpState.lastHighOrderCustomerAmount} is from ${alertPopUpState.lastHighOrderCustomerName}",
+                "Last Highest amount Order was ₹ ${alertPopUpState.lastHighOrderCustomerAmount}/- from (${alertPopUpState.lastHighOrderCustomerName})",
               ).then((_) {
                 if (!context.mounted) return;
                 context.read<AlertPopUpBloc>().add(ClearHighOrderAlert());
@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       alertPopUpState.totalPendingOrderAmount;
                   showPopUP(
                     "Pending Orders",
-                    "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
+                    "From first 10 Orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
                   ).then((_) {
                     if (!context.mounted) return;
                     context.read<AlertPopUpBloc>().add(
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     alertPopUpState.totalPendingOrderAmount;
                 showPopUP(
                   "Pending Orders",
-                  "You have $pendingOrders pending orders today worth ₹$totalPendingAmount",
+                  "Among the first 10 orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
                 ).then((_) {
                   if (!context.mounted) return;
                   context.read<AlertPopUpBloc>().add(
@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alertPopUpState.apiStatus == Status.success) {
               showPopUP(
                 "High Amount Orders",
-                "${alertPopUpState.limitCrossedOrders} order's crossed ₹10,000/-",
+                "${alertPopUpState.limitCrossedOrders} order's crossed ₹ 10,000/-",
               ).then((_) {
                 if (!context.mounted) return;
                 context.read<AlertPopUpBloc>().add(
