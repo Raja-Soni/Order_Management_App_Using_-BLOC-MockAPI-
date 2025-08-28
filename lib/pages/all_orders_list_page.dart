@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:page_transition/page_transition.dart';
 
 import '../AppColors/app_colors.dart';
 import '../bloc/api_data/api_db_bloc.dart';
@@ -12,11 +11,11 @@ import '../bloc/dark_theme_mode/dark_theme_state.dart';
 import '../custom_widgets/custom_container.dart';
 import '../custom_widgets/custom_fab.dart';
 import '../custom_widgets/custom_text.dart';
+import '../routes/route_names.dart';
 import '../utils/enums.dart';
-import 'new_order_page.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class AllOrdersListPage extends StatelessWidget {
+  const AllOrdersListPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -317,12 +316,9 @@ class HomePage extends StatelessWidget {
                             width: MediaQuery.of(context).size.width / 2,
                             buttonText: "Add New Order",
                             callback: () {
-                              Navigator.push(
+                              Navigator.pushNamed(
                                 context,
-                                PageTransition(
-                                  type: PageTransitionType.rightToLeftWithFade,
-                                  child: NewSalesOrderPage(),
-                                ),
+                                RouteNames.newSalesOrderPage,
                               );
                             },
                           );

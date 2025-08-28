@@ -7,7 +7,9 @@ import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc.dart';
 import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_event.dart';
 import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_state.dart';
 import 'package:erp_using_api/bloc/new_order/new_order_bloc.dart';
-import 'package:erp_using_api/pages/homepage.dart';
+import 'package:erp_using_api/pages/all_orders_list_page.dart';
+import 'package:erp_using_api/routes/route_names.dart';
+import 'package:erp_using_api/routes/routes.dart';
 import 'package:erp_using_api/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +62,8 @@ class MyApp extends StatelessWidget {
                 backgroundColor: AppColor.appbarLightThemeColor,
               ),
             ),
-            home: MyHomePage(),
+            initialRoute: RouteNames.homePage,
+            onGenerateRoute: Routes.generateRoute,
           );
         },
       ),
@@ -180,7 +183,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ],
-      child: HomePage(),
+      child: AllOrdersListPage(),
     );
   }
 }
