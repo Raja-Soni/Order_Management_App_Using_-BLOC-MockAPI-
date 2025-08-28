@@ -12,12 +12,14 @@ class OnlineDataBase {
       if (limit != null) {
         response = await http.get(
           Uri.parse(
-            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?page=$page&limit=$limit",
+            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?page=$page&limit=$limit&sortBy=id&order=desc",
           ),
         );
       } else {
         response = await http.get(
-          Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp"),
+          Uri.parse(
+            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp&sortBy=id&order=desc",
+          ),
         );
       }
       if (response.statusCode == 200) {
