@@ -1,22 +1,15 @@
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc.dart';
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_state.dart';
-import 'package:erp_using_api/bloc/api_data/api_db_bloc.dart';
-import 'package:erp_using_api/bloc/api_data/api_db_events.dart';
-import 'package:erp_using_api/bloc/api_data/api_db_states.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_event.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_state.dart';
-import 'package:erp_using_api/bloc/new_order/new_order_bloc.dart';
-import 'package:erp_using_api/pages/all_orders_list_page.dart';
-import 'package:erp_using_api/routes/route_names.dart';
-import 'package:erp_using_api/routes/routes.dart';
+import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
+import 'package:erp_using_api/custom_widgets/import_all_custom_widgets.dart';
+import 'package:erp_using_api/pages/all_pages.dart';
+import 'package:erp_using_api/routes/all_routes.dart';
 import 'package:erp_using_api/utils/enums.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'AppColors/app_colors.dart';
-import 'bloc/alert_pop_up/alert_popup_events.dart';
-import 'custom_widgets/custom_alert_box.dart';
 
 void main() {
   runApp(MyApp());
@@ -183,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> {
           },
         ),
       ],
-      child: AllOrdersListPage(),
+      child: DashboardPage(),
     );
   }
 }

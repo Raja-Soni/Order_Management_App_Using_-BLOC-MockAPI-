@@ -1,21 +1,15 @@
+import 'package:erp_using_api/custom_widgets/import_all_custom_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../AppColors/app_colors.dart';
-import '../bloc/api_data/api_db_bloc.dart';
-import '../bloc/api_data/api_db_events.dart';
-import '../bloc/api_data/api_db_states.dart';
-import '../bloc/dark_theme_mode/dark_theme_bloc.dart';
-import '../bloc/dark_theme_mode/dark_theme_event.dart';
-import '../bloc/dark_theme_mode/dark_theme_state.dart';
-import '../custom_widgets/custom_container.dart';
-import '../custom_widgets/custom_fab.dart';
-import '../custom_widgets/custom_text.dart';
-import '../routes/route_names.dart';
+import '../bloc/api_data/api_bloc_events_state.dart';
+import '../bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
+import '../routes/all_routes.dart';
 import '../utils/enums.dart';
 
-class AllOrdersListPage extends StatelessWidget {
-  const AllOrdersListPage({super.key});
+class DashboardPage extends StatelessWidget {
+  const DashboardPage({super.key});
 
   @override
   Widget build(BuildContext context) {

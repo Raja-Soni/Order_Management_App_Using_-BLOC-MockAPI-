@@ -1,18 +1,12 @@
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc.dart';
-import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_events.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc.dart';
-import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_state.dart';
-import 'package:erp_using_api/bloc/new_order/new_order_bloc.dart';
-import 'package:erp_using_api/custom_widgets/custom_fab.dart';
-import 'package:erp_using_api/custom_widgets/custom_form_text_field.dart';
-import 'package:erp_using_api/custom_widgets/custom_text.dart';
+import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
+import 'package:erp_using_api/custom_widgets/import_all_custom_widgets.dart';
 import 'package:erp_using_api/model/sales_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../AppColors/app_colors.dart';
-import '../bloc/new_order/new_order_events.dart';
-import '../bloc/new_order/new_order_state.dart';
 
 class NewSalesOrderPage extends StatefulWidget {
   const NewSalesOrderPage({super.key});
