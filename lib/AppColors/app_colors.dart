@@ -19,4 +19,6 @@ class AppColor {
   static Color filterIconDarkThemeColor = Colors.white;
   static Color textLightThemeColor = Colors.black;
   static Color textDarkThemeColor = Colors.white;
+  static Color switchActiveTrackColor = Colors.grey.shade800;
+  static Color switchInactiveTrackColor = Colors.blue.shade100;
 }

@@ -30,8 +30,8 @@ class DashboardPage extends StatelessWidget {
                 Switch(
                   padding: EdgeInsets.only(right: 30),
                   trackOutlineColor: WidgetStatePropertyAll(Colors.transparent),
-                  activeTrackColor: Colors.grey.shade800,
-                  inactiveTrackColor: Colors.blue.shade100,
+                  activeTrackColor: AppColor.switchActiveTrackColor,
+                  inactiveTrackColor: AppColor.switchInactiveTrackColor,
                   activeThumbImage: AssetImage("assets/images/dark_mode.jpg"),
                   inactiveThumbImage: AssetImage(
                     "assets/images/light_mode.png",
