@@ -231,6 +231,8 @@ class DashboardPage extends StatelessWidget {
                                                       '${dataList[index].date} \n₹ ${dataList[index].amount}',
                                                 ),
                                                 trailing: Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.end,
                                                   spacing: 5,
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -259,6 +261,12 @@ class DashboardPage extends StatelessWidget {
                                                       ),
                                                     ),
                                                     IconButton(
+                                                      padding: EdgeInsets.zero,
+                                                      alignment:
+                                                          AlignmentGeometry.xy(
+                                                            4,
+                                                            4,
+                                                          ),
                                                       highlightColor:
                                                           Colors.red.shade200,
                                                       onPressed: () {
@@ -276,7 +284,7 @@ class DashboardPage extends StatelessWidget {
                                                       icon: Icon(
                                                         Icons.delete,
                                                         color: Colors.redAccent,
-                                                        size: 30,
+                                                        size: 35,
                                                       ),
                                                     ),
                                                   ],
