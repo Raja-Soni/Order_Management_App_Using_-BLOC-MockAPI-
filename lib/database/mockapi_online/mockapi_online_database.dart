@@ -17,9 +17,7 @@ class OnlineDataBase {
         );
       } else {
         response = await http.get(
-          Uri.parse(
-            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp&sortBy=id&order=desc",
-          ),
+          Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp"),
         );
       }
       if (response.statusCode == 200) {
