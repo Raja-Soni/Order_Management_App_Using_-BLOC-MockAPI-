@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       alertPopUpState.totalPendingOrderAmount;
                   showPopUP(
                     "Pending Orders",
-                    "From first 10 Orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
+                    "Among the first 10 orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
                   ).then((_) {
                     if (!context.mounted) return;
                     context.read<AlertPopUpBloc>().add(
@@ -165,7 +165,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 alertPopUpState.apiStatus == Status.success) {
               showPopUP(
                 "High Amount Orders",
-                "${alertPopUpState.limitCrossedOrders} order's crossed ₹ 10,000/-",
+                "Among the first 10 orders, ${alertPopUpState.limitCrossedOrders} have crossed ₹ 10,000/-",
               ).then((_) {
                 if (!context.mounted) return;
                 context.read<AlertPopUpBloc>().add(
