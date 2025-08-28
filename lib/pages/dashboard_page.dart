@@ -198,8 +198,13 @@ class DashboardPage extends StatelessWidget {
                                           if (index == dataList.length &&
                                               apiDbState.hasMoreData) {
                                             return Center(
-                                              child:
-                                                  CircularProgressIndicator(),
+                                              child: CircularProgressIndicator(
+                                                color: darkModeState.darkTheme
+                                                    ? AppColor
+                                                          .circularProgressDarkColor
+                                                    : AppColor
+                                                          .circularProgressLightColor,
+                                              ),
                                             );
                                           } else {
                                             return Card(
