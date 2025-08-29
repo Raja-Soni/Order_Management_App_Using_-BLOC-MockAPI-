@@ -8,21 +8,21 @@ https://github.com/user-attachments/assets/659f4af9-3d5f-40bf-8296-1e006474ed5e
 
 1. **Sales Order Listing Page**  
    - Pulled sales order data from a mock/dummy API.  
-   - Displayed key details: Customer Name, Order Date, Total Amount, and Status (Pending/Delivered).  
-   - Added filters such as *Today’s Orders* and *Pending only*.  
+   - Displayed key details: Customer Name, Order Date, Total Amount, and Status (Pending/Delivered) ordered as newest to oldest according to date & time.  
+   - Added filters such as *All Orders*, *Today’s Orders*, *Pending Orders*, *Delivered Orders*.  
 
 2. **Create New Sales Order Page**  
-   - Built a form with fields: Customer Name, Product (dropdown from API), Quantity, and Rate.  
+   - Built a form with fields: Customer Name, Product(Dropdown local List), Quantity, and Rate.  
    - Implemented auto-calculation of Total (Quantity × Rate).  
    - On save: mock-post to API → show confirmation → navigate back to listing page.  
 
 3. **AI Reminder / High-Value Order Alert**  
-   - Triggered real-time alert if any order total > ₹10,000.  
+   - Triggered real-time alert if any order total > ₹10,000 and display on dashboard.  
    - Implemented using custom alert pop-up.  
-   - Persisted alerts with `SharedPreferences` to re-display on app restart.  
+   - Persisted alerts with `SharedPreferences` to display only if last order amount crossed ₹10,000 only once, on app restart.  
 
 4. **Daily Sales Summary Notification**  
-   - Displayed a summary pop-up on app launch: *“You have X pending orders worth ₹Y”*.  
+   - Displayed a summary pop-up on app launch: *"In the last 10 orders, X are pending worth ₹Y.",*.  
    - Calculated dynamically from local/mock database.  
 
 ---
