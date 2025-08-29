@@ -23,7 +23,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     Emitter<APIDataBaseStates> emit,
   ) async {
     await dataBase
-        .fetchData(page: 1, limit: 10)
+        .fetchData(page: 1, limit: state.limit)
         .then((value) {
           tempList = List.from(value);
           emit(
@@ -84,7 +84,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
 
   applyFilter(ApplyFilter event, Emitter<APIDataBaseStates> emit) async {
     emit(state.copyWith(apiStatus: Status.loading, message: "loading"));
-    await dataBase.fetchData(page: 1).then((value) {
+    await dataBase.fetchData().then((value) {
       if (event.filter == Filters.all) {
         tempList = value;
       } else if (event.filter == Filters.today) {
