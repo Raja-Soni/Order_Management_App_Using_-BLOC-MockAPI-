@@ -135,7 +135,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       alertPopUpState.totalPendingOrderAmount;
                   showPopUP(
                     "Pending Orders",
-                    "Among the latest 10 orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
+                    "Among the latest 10 orders, You have $pendingOrders pending orders worth ₹ $totalPendingAmount/-",
                   ).then((_) {
                     if (!context.mounted) return;
                     context.read<AlertPopUpBloc>().add(
@@ -151,7 +151,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     alertPopUpState.totalPendingOrderAmount;
                 showPopUP(
                   "Pending Orders",
-                  "Among the latest 10 orders, You have $pendingOrders pending orders today worth ₹ $totalPendingAmount/-",
+                  "Among the latest 10 orders, You have $pendingOrders pending orders worth ₹ $totalPendingAmount/-",
                 ).then((_) {
                   if (!context.mounted) return;
                   context.read<AlertPopUpBloc>().add(
