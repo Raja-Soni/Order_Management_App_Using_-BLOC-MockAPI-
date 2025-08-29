@@ -255,7 +255,7 @@ class DashboardPage extends StatelessWidget {
                                                 subtitle: CustomText(
                                                   textSize: 16,
                                                   text:
-                                                      '${dataList[index].date} \n₹ ${dataList[index].amount}/-',
+                                                      '${dataList[index].dateAndTime.toString().split(' ').first} \n₹ ${dataList[index].amount}/-',
                                                 ),
                                                 trailing: Row(
                                                   crossAxisAlignment:
@@ -305,6 +305,9 @@ class DashboardPage extends StatelessWidget {
                                                               DeleteItem(
                                                                 id: dataList[index]
                                                                     .id,
+                                                                filter:
+                                                                    apiDbState
+                                                                        .filter,
                                                               ),
                                                             );
                                                       },

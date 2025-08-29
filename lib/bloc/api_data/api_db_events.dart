@@ -28,7 +28,8 @@ class ApplyFilter extends APIDataBaseEvents {
 
 class DeleteItem extends APIDataBaseEvents {
   final String? id;
-  DeleteItem({required this.id});
+  final Filters filter;
+  DeleteItem({required this.id, required this.filter});
 
   @override
   List<Object?> get props => [id];

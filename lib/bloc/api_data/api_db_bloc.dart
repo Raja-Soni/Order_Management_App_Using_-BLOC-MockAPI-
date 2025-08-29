@@ -85,19 +85,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
   applyFilter(ApplyFilter event, Emitter<APIDataBaseStates> emit) async {
     emit(state.copyWith(apiStatus: Status.loading, message: "loading"));
     await dataBase.fetchData().then((value) {
-      if (event.filter == Filters.all) {
-        tempList = value;
-      } else if (event.filter == Filters.today) {
-        tempList = value
-            .where(
-              (item) => item.date == DateTime.now().toString().split(" ").first,
-            )
-            .toList();
-      } else if (event.filter == Filters.delivered) {
-        tempList = value.where((item) => item.status == "Delivered").toList();
-      } else if (event.filter == Filters.pending) {
-        tempList = value.where((item) => item.status == "Pending").toList();
-      }
+      tempList = getFilterList(filter: event.filter, value: value);
       emit(
         state.copyWith(
           dataList: List.from(tempList),
@@ -116,7 +104,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     String? id = event.id;
     await dataBase.deleteItem(id!);
     await dataBase.fetchData(page: 1, limit: state.limit).then((value) {
-      tempList = List.from(value);
+      tempList = getFilterList(filter: event.filter, value: value);
       emit(
         state.copyWith(
           dataList: List.from(tempList),
@@ -124,6 +112,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
           page: 1,
           message: "Item Deleted",
           hasMoreData: tempList.length >= 10,
+          filter: state.filter,
         ),
       );
     });
@@ -141,8 +130,32 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
           message: "Item added",
           page: 1,
           hasMoreData: tempList.length >= 10,
+          filter: Filters.all,
         ),
       );
     });
+  }
+
+  List<ItemModel> getFilterList({
+    required Filters filter,
+    required List<ItemModel> value,
+  }) {
+    if (filter == Filters.all) {
+      return value;
+    } else if (filter == Filters.today) {
+      return value
+          .where(
+            (item) =>
+                item.dateAndTime.toString().split(" ").first ==
+                DateTime.now().toString().split(" ").first,
+          )
+          .toList();
+    } else if (filter == Filters.delivered) {
+      return value.where((item) => item.status == "Delivered").toList();
+    } else if (filter == Filters.pending) {
+      return value.where((item) => item.status == "Pending").toList();
+    } else {
+      return [];
+    }
   }
 }

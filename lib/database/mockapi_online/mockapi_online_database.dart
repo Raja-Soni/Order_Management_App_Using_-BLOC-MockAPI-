@@ -12,13 +12,13 @@ class OnlineDataBase {
       if (page != null && limit != null) {
         response = await http.get(
           Uri.parse(
-            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?page=$page&limit=$limit&sortBy=date&order=desc",
+            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?page=$page&limit=$limit&sortBy=datetime&order=desc",
           ),
         );
       } else {
         response = await http.get(
           Uri.parse(
-            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?sortBy=date&order=desc",
+            "https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp?sortBy=datetime&order=desc",
           ),
         );
       }
@@ -31,7 +31,7 @@ class OnlineDataBase {
                 customer: e['customer'] as String,
                 amount: e['amount'] as int,
                 status: e['status'] as String,
-                date: e['date'] as String,
+                dateAndTime: e['datetime'] as String,
               ),
             )
             .toList();
@@ -59,7 +59,7 @@ class OnlineDataBase {
         "customer": item.customer,
         "amount": item.amount,
         "status": item.status,
-        "date": item.date,
+        "datetime": item.dateAndTime,
       }),
     );
     if (response.statusCode != 201) {

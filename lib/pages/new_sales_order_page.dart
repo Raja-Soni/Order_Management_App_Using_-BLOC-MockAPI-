@@ -224,10 +224,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                             (newOrderState.totalPrice % 2) == 0
                                             ? "Pending"
                                             : "Delivered",
-                                        date: DateTime.now()
-                                            .toString()
-                                            .split(" ")
-                                            .first,
+                                        dateAndTime: DateTime.now().toString(),
                                       );
                                       if (!context.mounted) return;
                                       context.read<NewOrderBloc>().add(

@@ -5,16 +5,16 @@ class ItemModel extends Equatable {
   final String? customer;
   final int? amount;
   final String? status;
-  final String? date;
+  final String? dateAndTime;
 
   const ItemModel({
     this.id,
     required this.customer,
     required this.amount,
     required this.status,
-    required this.date,
+    required this.dateAndTime,
   });
 
   @override
-  List<Object?> get props => [id, customer, amount, status, date];
+  List<Object?> get props => [id, customer, amount, status, dateAndTime];
 }
