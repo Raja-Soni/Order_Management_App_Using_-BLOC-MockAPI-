@@ -7,9 +7,10 @@ https://github.com/user-attachments/assets/659f4af9-3d5f-40bf-8296-1e006474ed5e
 **Ans:**
 
 1. **Sales Order Listing Page**  
-   - Pulled sales order data from a mock/dummy API.  
-   - Displayed key details: Customer Name, Order Date, Total Amount, and Status (Pending/Delivered) ordered as newest to oldest according to date & time.  
-   - Added filters such as *All Orders*, *Today’s Orders*, *Pending Orders*, *Delivered Orders*.  
+   - Pulled sales order data from a mock/dummy API.
+   - Displayed key details: Customer Name, Order Date, Total Amount, and Status (Pending/Delivered) ordered as newest to oldest according to date & time.
+   - Implemented pagination in the initial listing to improve scalability and user experience.
+   - Added filters such as *All Orders*, *Today’s Orders*, *Pending Orders*, *Delivered Orders*. 
 
 2. **Create New Sales Order Page**  
    - Built a form with fields: Customer Name, Product(Dropdown local List), Quantity, and Rate.  
