@@ -92,8 +92,8 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
           message: "Filter applied",
           apiStatus: Status.success,
           filter: event.filter,
-          hasMoreData: tempList.length >= 10,
           page: 1,
+          hasMoreData: false,
         ),
       );
     });
@@ -103,7 +103,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     emit(state.copyWith(apiStatus: Status.loading));
     String? id = event.id;
     await dataBase.deleteItem(id!);
-    await dataBase.fetchData(page: 1, limit: state.limit).then((value) {
+    await dataBase.fetchData().then((value) {
       tempList = getFilterList(filter: event.filter, value: value);
       emit(
         state.copyWith(
