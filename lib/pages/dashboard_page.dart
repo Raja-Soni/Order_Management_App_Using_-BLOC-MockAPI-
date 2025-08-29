@@ -249,8 +249,14 @@ class DashboardPage extends StatelessWidget {
 
                                                 title: CustomText(
                                                   textSize: 20,
-                                                  text: dataList[index].customer
-                                                      .toString(),
+                                                  text:
+                                                      dataList[index].customer
+                                                          .toString()
+                                                          .substring(0, 1)
+                                                          .toUpperCase() +
+                                                      dataList[index].customer
+                                                          .toString()
+                                                          .substring(1),
                                                 ),
                                                 subtitle: CustomText(
                                                   textSize: 16,
