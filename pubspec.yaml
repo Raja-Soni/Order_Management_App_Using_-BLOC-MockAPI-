@@ -40,6 +40,7 @@ dependencies:
   bloc: ^9.0.0
   flutter_bloc: ^9.1.1
   shared_preferences: ^2.5.3
+  flutter_native_splash: ^2.4.6
 
 
 dev_dependencies:
@@ -47,11 +48,22 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
 
+flutter_native_splash:
+  color: "#2196F3"
+  color_dark: "#212121"
+  image: assets/images/erp_splash_logo.png
+  android_12:
+    image: assets/images/erp_splash_logo.png
+    icon_background_color: "#2196F3"
+    icon_background_color_dark: "#212121"
+
+
 flutter_launcher_icons:
     image_path: "assets/images/erp_logo.png"
     android: "launcher_icon"
     ios: false
     remove_alpha_ios: true
+
 
 
   # The "flutter_lints" package below contains a set of recommended lints to
