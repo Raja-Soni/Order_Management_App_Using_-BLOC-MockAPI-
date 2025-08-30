@@ -26,7 +26,6 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
         .fetchData(page: 1, limit: state.limit)
         .then((value) {
           tempList = value;
-          print(value);
           emit(
             state.copyWith(
               dataList: List.from(tempList),
