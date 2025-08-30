@@ -18,13 +18,13 @@ class DashboardPage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              surfaceTintColor: Colors.transparent,
+              surfaceTintColor: AppColor.transparentColor,
               leading: Icon(Icons.list, size: 40, color: Colors.white),
               title: CustomText(
                 text: "Order List",
                 textSize: 33,
                 textBoldness: FontWeight.bold,
-                textColor: Colors.white,
+                textColor: AppColor.appbarTitleTextColor,
               ),
               actions: [
                 Switch(
@@ -59,7 +59,9 @@ class DashboardPage extends StatelessWidget {
                         ),
                       );
                     } else if (apiDbState.apiStatus == Status.failure) {
-                      return Center(child: Text(apiDbState.message.toString()));
+                      return Center(
+                        child: CustomText(text: apiDbState.message.toString()),
+                      );
                     } else {
                       return CustomContainer(
                         child: Column(

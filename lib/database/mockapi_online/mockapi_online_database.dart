@@ -7,7 +7,7 @@ import '../../model/sales_order.dart';
 class OnlineDataBase {
   Future<List<ItemModel>> fetchData({int? page, limit}) async {
     List<ItemModel> result = [];
-    dynamic response;
+    final response;
     try {
       if (page != null && limit != null) {
         response = await http.get(

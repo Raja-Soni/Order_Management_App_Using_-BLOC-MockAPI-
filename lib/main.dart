@@ -39,18 +39,18 @@ class MyApp extends StatelessWidget {
             themeMode: state.darkTheme ? ThemeMode.dark : ThemeMode.light,
             darkTheme: ThemeData.dark().copyWith(
               brightness: Brightness.dark,
-              scaffoldBackgroundColor: Colors.black,
+              scaffoldBackgroundColor: AppColor.scaffoldDarkBackgroundColor,
               appBarTheme: AppBarTheme(
-                surfaceTintColor: Colors.transparent,
+                surfaceTintColor: AppColor.transparentColor,
                 elevation: 0,
                 backgroundColor: AppColor.appbarDarkThemeColor,
               ),
             ),
             theme: ThemeData().copyWith(
               brightness: Brightness.light,
-              scaffoldBackgroundColor: Colors.white,
+              scaffoldBackgroundColor: AppColor.scaffoldLightBackgroundColor,
               appBarTheme: AppBarTheme(
-                surfaceTintColor: Colors.transparent,
+                surfaceTintColor: AppColor.transparentColor,
                 elevation: 0,
                 backgroundColor: AppColor.appbarLightThemeColor,
               ),

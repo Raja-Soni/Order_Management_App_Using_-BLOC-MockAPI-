@@ -40,6 +40,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          surfaceTintColor: AppColor.transparentColor,
           leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
@@ -53,7 +54,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
             text: "Add New Order",
             textSize: 30,
             textBoldness: FontWeight.bold,
-            textColor: AppColor.lightThemeColor,
+            textColor: AppColor.appbarTitleTextColor,
           ),
           centerTitle: true,
         ),
@@ -62,7 +63,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
             return BlocBuilder<NewOrderBloc, NewOrderState>(
               builder: (context, newOrderState) {
                 final navigator = Navigator.of(context);
-                return Container(
+                return CustomContainer(
                   padding: EdgeInsets.all(20),
                   child: SingleChildScrollView(
                     child: Form(
@@ -204,7 +205,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                           children: [
                                             Icon(
                                               Icons.check_circle,
-                                              color: Colors.green,
+                                              color: AppColor.confirmColor,
                                             ),
                                             CustomText(
                                               text: "Order Added",
@@ -251,7 +252,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                     content: Row(
                                       spacing: 10,
                                       children: [
-                                        Icon(Icons.cancel, color: Colors.red),
+                                        Icon(
+                                          Icons.cancel,
+                                          color: AppColor.cancelColor,
+                                        ),
                                         CustomText(
                                           text: "Failed to add order",
                                           textBoldness: FontWeight.bold,
@@ -265,7 +269,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             },
                           ),
                           CustomButton(
-                            backgroundColor: Colors.red,
+                            backgroundColor: AppColor.cancelColor,
                             width: MediaQuery.of(context).size.width,
                             buttonText: "Cancel",
                             callback: () {
