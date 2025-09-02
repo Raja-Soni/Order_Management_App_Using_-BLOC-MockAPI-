@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:erp_using_api/model/item_model.dart';
 
-class ItemModel extends Equatable {
+class SalesOrderListItemModel extends Equatable {
   final String? id;
   final String? customer;
   final int? amount;
@@ -9,7 +9,7 @@ class ItemModel extends Equatable {
   final String? dateAndTime;
   final List<NewOrderDetailsItemModel>? newOrderDetails;
 
-  const ItemModel({
+  const SalesOrderListItemModel({
     this.id,
     required this.customer,
     required this.amount,

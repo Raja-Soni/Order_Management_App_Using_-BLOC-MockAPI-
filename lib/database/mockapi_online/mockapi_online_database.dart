@@ -2,12 +2,11 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
-import '../../model/item_model.dart';
-import '../../model/sales_order.dart';
+import '../../model/all_models.dart';
 
 class OnlineDataBase {
-  Future<List<ItemModel>> fetchData({int? page, limit}) async {
-    List<ItemModel> result = [];
+  Future<List<SalesOrderListItemModel>> fetchData({int? page, limit}) async {
+    List<SalesOrderListItemModel> result = [];
     final response;
     try {
       if (page != null && limit != null) {
@@ -27,7 +26,7 @@ class OnlineDataBase {
         final body = json.decode(response.body) as List;
         result = body
             .map(
-              (e) => ItemModel(
+              (e) => SalesOrderListItemModel(
                 id: e['id'] as String,
                 customer: e['customer'] as String,
                 amount: e['amount'] as int,
@@ -57,7 +56,7 @@ class OnlineDataBase {
     }
   }
 
-  addItem(ItemModel item) async {
+  addItem(SalesOrderListItemModel item) async {
     final response = await http.post(
       Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp"),
       headers: {"Content-Type": "application/json"},

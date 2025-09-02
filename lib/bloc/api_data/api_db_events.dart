@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:erp_using_api/model/sales_order.dart';
+import 'package:erp_using_api/model/sales_order_list_item_model.dart';
 
 import '../../utils/enums.dart';
 
@@ -36,7 +36,7 @@ class DeleteItem extends APIDataBaseEvents {
 }
 
 class AddItem extends APIDataBaseEvents {
-  final ItemModel? item;
+  final SalesOrderListItemModel? item;
   AddItem({required this.item});
 
   @override

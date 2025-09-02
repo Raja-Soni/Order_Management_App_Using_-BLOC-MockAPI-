@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc_events_state.dart';
 import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
-import 'package:erp_using_api/model/sales_order.dart';
+import 'package:erp_using_api/model/all_models.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AlertPopUpBloc extends Bloc<AlertPopUpEvents, AlertPopUpStates> {
@@ -22,7 +22,7 @@ class AlertPopUpBloc extends Bloc<AlertPopUpEvents, AlertPopUpStates> {
     Emitter<AlertPopUpStates> emit,
   ) async {
     emit(state.copyWith(apiStatus: api.state.apiStatus));
-    List<ItemModel> pendingList = [];
+    List<SalesOrderListItemModel> pendingList = [];
     pendingList = api.tempList
         .where((item) => item.status == "Pending")
         .toList();
@@ -31,7 +31,7 @@ class AlertPopUpBloc extends Bloc<AlertPopUpEvents, AlertPopUpStates> {
     for (var pendList in pendingList) {
       totalPendingAmount += pendList.amount!;
     }
-    List<ItemModel> limitCrossedOrdersList = [];
+    List<SalesOrderListItemModel> limitCrossedOrdersList = [];
     limitCrossedOrdersList = api.tempList
         .where((item) => item.amount! > 10000)
         .toList();

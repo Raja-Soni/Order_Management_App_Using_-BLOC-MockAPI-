@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:erp_using_api/model/sales_order.dart';
 
 abstract class NewOrderEvents extends Equatable {
   @override
@@ -40,13 +39,7 @@ class OrderDeliveryStatusChangedEvent extends NewOrderEvents {
 
 class OrderItemDetailedList extends NewOrderEvents {}
 
-class AddNewOrderEvent extends NewOrderEvents {
-  final ItemModel itemModel;
-  AddNewOrderEvent({required this.itemModel});
-
-  @override
-  List<Object?> get props => [itemModel];
-}
+class AddNewOrderEvent extends NewOrderEvents {}
 
 class NewItemDetails extends NewOrderEvents {
   final String? itemName;

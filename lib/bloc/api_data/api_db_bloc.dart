@@ -4,12 +4,12 @@ import 'package:bloc/bloc.dart';
 import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
 import 'package:erp_using_api/database/mockapi_online/mockapi_online_database.dart';
 
-import '../../model/sales_order.dart';
+import '../../model/sales_order_list_item_model.dart';
 import '../../utils/enums.dart';
 
 class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
   OnlineDataBase dataBase = OnlineDataBase();
-  List<ItemModel> tempList = [];
+  List<SalesOrderListItemModel> tempList = [];
   APIDataBaseBloc() : super(APIDataBaseStates()) {
     on<FetchOnlineData>(fetchOnlineData);
     on<FetchMoreData>(fetchMoreData);
@@ -136,9 +136,9 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     });
   }
 
-  List<ItemModel> getFilterList({
+  List<SalesOrderListItemModel> getFilterList({
     required Filters filter,
-    required List<ItemModel> value,
+    required List<SalesOrderListItemModel> value,
   }) {
     if (filter == Filters.all) {
       return value;

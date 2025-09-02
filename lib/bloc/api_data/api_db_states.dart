@@ -1,11 +1,11 @@
 import 'package:equatable/equatable.dart';
-import 'package:erp_using_api/model/sales_order.dart';
+import 'package:erp_using_api/model/all_models.dart';
 
 import '../../utils/enums.dart';
 
 class APIDataBaseStates extends Equatable {
   final Status? apiStatus;
-  final List<ItemModel> dataList;
+  final List<SalesOrderListItemModel> dataList;
   final String message;
   final Filters filter;
   final int page;
@@ -24,7 +24,7 @@ class APIDataBaseStates extends Equatable {
 
   APIDataBaseStates copyWith({
     Status? apiStatus,
-    List<ItemModel>? dataList,
+    List<SalesOrderListItemModel>? dataList,
     String? message,
     Filters? filter,
     int? page,

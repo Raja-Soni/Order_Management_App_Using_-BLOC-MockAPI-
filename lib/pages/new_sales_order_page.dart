@@ -2,7 +2,6 @@ import 'package:erp_using_api/bloc/alert_pop_up/alert_popup_bloc_events_state.da
 import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
 import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
 import 'package:erp_using_api/custom_widgets/import_all_custom_widgets.dart';
-import 'package:erp_using_api/model/sales_order.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -516,21 +515,9 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                     )
                                     .closed
                                     .then((_) {
-                                      ItemModel newOrderItem = ItemModel(
-                                        customer: newOrderState.customerName,
-                                        amount: newOrderState.totalPrice,
-                                        status: newOrderState.isDelivered
-                                            ? "Delivered"
-                                            : "Pending",
-                                        dateAndTime: DateTime.now().toString(),
-                                        newOrderDetails:
-                                            newOrderState.itemDetails,
-                                      );
                                       if (!context.mounted) return;
                                       context.read<NewOrderBloc>().add(
-                                        AddNewOrderEvent(
-                                          itemModel: newOrderItem,
-                                        ),
+                                        AddNewOrderEvent(),
                                       );
                                       if (newOrderState.totalPrice > 10000) {
                                         context.read<AlertPopUpBloc>().add(

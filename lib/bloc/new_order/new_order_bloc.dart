@@ -3,9 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
 import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
-import 'package:erp_using_api/model/item_model.dart';
-
-import '../../model/sales_order.dart';
+import 'package:erp_using_api/model/all_models.dart';
 
 class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
   APIDataBaseBloc apiBloc;
@@ -44,8 +42,14 @@ class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
   }
 
   addNewOrderEvent(AddNewOrderEvent event, Emitter<NewOrderState> emit) async {
-    ItemModel newOrder = event.itemModel;
-    apiBloc.add(AddItem(item: newOrder));
+    SalesOrderListItemModel newOrderItem = SalesOrderListItemModel(
+      customer: state.customerName,
+      amount: state.totalPrice,
+      status: state.isDelivered ? "Delivered" : "Pending",
+      dateAndTime: DateTime.now().toString(),
+      newOrderDetails: state.itemDetails,
+    );
+    apiBloc.add(AddItem(item: newOrderItem));
   }
 
   FutureOr<void> orderDeliveryStatusChangedEvent(
