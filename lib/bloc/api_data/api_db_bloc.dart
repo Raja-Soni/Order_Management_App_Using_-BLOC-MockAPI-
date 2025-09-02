@@ -17,6 +17,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     on<DeleteItem>(deleteItem);
     on<AddItem>(addItem);
     on<DetailedOrderPage>(detailedOrderPage);
+    on<UpdateSelectedOrderStatus>(updateSelectedOrderStatus);
   }
 
   void fetchOnlineData(
@@ -165,5 +166,22 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     Emitter<APIDataBaseStates> emit,
   ) {
     emit(state.copyWith(selectedOrderIndex: event.selectedOrderIndex));
+  }
+
+  FutureOr<void> updateSelectedOrderStatus(
+    UpdateSelectedOrderStatus event,
+    Emitter<APIDataBaseStates> emit,
+  ) async {
+    emit(state.copyWith(apiStatus: Status.loading));
+    await dataBase.updateStatus(event.id, event.updateStatus);
+    await dataBase.fetchData().then((value) {
+      tempList = List.from(value);
+      emit(
+        state.copyWith(
+          dataList: List.from(tempList),
+          apiStatus: Status.success,
+        ),
+      );
+    });
   }
 }

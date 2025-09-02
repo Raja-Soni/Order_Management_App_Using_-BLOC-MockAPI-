@@ -33,7 +33,7 @@ class PriceChangedEvent extends NewOrderEvents {
 class TotalPriceChangedEvent extends NewOrderEvents {}
 
 class OrderDeliveryStatusChangedEvent extends NewOrderEvents {
-  final bool isDelivered;
+  final String isDelivered;
   OrderDeliveryStatusChangedEvent({required this.isDelivered});
 }
 

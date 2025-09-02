@@ -49,3 +49,9 @@ class DetailedOrderPage extends APIDataBaseEvents {
   @override
   List<Object?> get props => [selectedOrderIndex];
 }
+
+class UpdateSelectedOrderStatus extends APIDataBaseEvents {
+  final String id;
+  final String updateStatus;
+  UpdateSelectedOrderStatus({required this.id, required this.updateStatus});
+}

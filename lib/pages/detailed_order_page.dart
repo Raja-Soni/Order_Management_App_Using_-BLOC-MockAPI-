@@ -1,5 +1,6 @@
 import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
 import 'package:erp_using_api/bloc/dark_theme_mode/dark_theme_bloc_events_state.dart';
+import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -16,6 +17,7 @@ class DetailedOrderPage extends StatefulWidget {
 class DetailedOrderPageState extends State<DetailedOrderPage> {
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
     return Scaffold(
       appBar: AppBar(
         surfaceTintColor: AppColor.transparentColor,
@@ -34,6 +36,7 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
         centerTitle: true,
       ),
       body: BlocBuilder<APIDataBaseBloc, APIDataBaseStates>(
+        buildWhen: (prev, curr) => prev.dataList != curr.dataList,
         builder: (context, apiState) {
           if (apiState.apiStatus == Status.success)
             return SingleChildScrollView(
@@ -46,40 +49,12 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                     CustomText(
                       text:
                           "Customer/Company: ${apiState.dataList[apiState.selectedOrderIndex].customer}",
-                      textSize: 25,
+                      textSize: 24,
                     ),
                     CustomText(
                       text:
                           "Total Order Amount: ₹${apiState.dataList[apiState.selectedOrderIndex].amount}/-",
-                      textSize: 22,
-                    ),
-                    Row(
-                      children: [
-                        CustomText(text: "Order Status: ", textSize: 22),
-                        CustomContainer(
-                          height: 25,
-                          width: 90,
-                          backgroundColor:
-                              apiState
-                                      .dataList[apiState.selectedOrderIndex]
-                                      .status ==
-                                  "Delivered"
-                              ? Colors.green
-                              : Colors.orange,
-                          borderRadius: 20,
-                          child: Center(
-                            child: CustomText(
-                              text: apiState
-                                  .dataList[apiState.selectedOrderIndex]
-                                  .status
-                                  .toString(),
-                              textSize: 15,
-                              textColor: Colors.white,
-                              textBoldness: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ],
+                      textSize: 20,
                     ),
                     CustomText(
                       text:
@@ -91,90 +66,350 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                           "Order Time: ${apiState.dataList[apiState.selectedOrderIndex].dateAndTime.toString().split(" ").last.split(".").first}",
                       textSize: 20,
                     ),
-                    CustomContainer(
-                      backgroundColor: AppColor.confirmColor,
-                      borderRadius: 10,
-                      child: Padding(
-                        padding: EdgeInsets.only(left: 15.0, top: 5, bottom: 5),
-                        child: Row(
+                    BlocBuilder<NewOrderBloc, NewOrderState>(
+                      builder: (context, orderState) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            CustomText(text: "#"),
-                            SizedBox(width: 30),
-                            CustomText(text: "Items"),
-                            SizedBox(width: 58),
-                            CustomText(text: "Price"),
-                            SizedBox(width: 18),
-                            CustomText(text: "Quantity"),
-                            SizedBox(width: 40),
-                            CustomText(text: "Total"),
+                            CustomText(text: "Order Status:  ", textSize: 32),
+                            Row(
+                              children: [
+                                CustomContainer(
+                                  height: 40,
+                                  width: 130,
+                                  backgroundColor:
+                                      apiState
+                                              .dataList[apiState
+                                                  .selectedOrderIndex]
+                                              .status ==
+                                          "Delivered"
+                                      ? AppColor.deliveredOrderColor
+                                      : AppColor.pendingOrderColor,
+                                  borderRadius: 20,
+                                  child: Center(
+                                    child: CustomText(
+                                      text: apiState
+                                          .dataList[apiState.selectedOrderIndex]
+                                          .status
+                                          .toString(),
+                                      textSize: 20,
+                                      textColor: AppColor.whiteColor,
+                                      textBoldness: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    showDialog(
+                                      barrierDismissible: false,
+                                      context: context,
+                                      builder: (context) {
+                                        return BlocBuilder<
+                                          DarkThemeBloc,
+                                          DarkThemeState
+                                        >(
+                                          builder: (context, darkThemeState) {
+                                            return BlocBuilder<
+                                              APIDataBaseBloc,
+                                              APIDataBaseStates
+                                            >(
+                                              buildWhen: (prev, curr) =>
+                                                  prev.apiStatus !=
+                                                  curr.apiStatus,
+                                              builder: (context, apiState) {
+                                                return AlertDialog(
+                                                  backgroundColor:
+                                                      darkThemeState.darkTheme
+                                                      ? AppColor.darkThemeColor
+                                                      : AppColor
+                                                            .lightThemeColor,
+                                                  title: Center(
+                                                    child: CustomText(
+                                                      text:
+                                                          apiState.apiStatus ==
+                                                              Status.loading
+                                                          ? "Changing Order Status"
+                                                          : "Order Status",
+                                                      textSize: 20,
+                                                      textBoldness:
+                                                          FontWeight.bold,
+                                                    ),
+                                                  ),
+                                                  content:
+                                                      apiState.apiStatus ==
+                                                          Status.loading
+                                                      ? SizedBox(
+                                                          height: 50,
+                                                          child: Center(
+                                                            child: CircularProgressIndicator(
+                                                              color:
+                                                                  darkThemeState
+                                                                      .darkTheme
+                                                                  ? AppColor
+                                                                        .circularProgressDarkColor
+                                                                  : AppColor
+                                                                        .circularProgressLightColor,
+                                                            ),
+                                                          ),
+                                                        )
+                                                      : Column(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Row(
+                                                              children: [
+                                                                Radio(
+                                                                  activeColor:
+                                                                      AppColor
+                                                                          .confirmColor,
+                                                                  value:
+                                                                      "Pending",
+                                                                  groupValue: apiState
+                                                                      .dataList[apiState
+                                                                          .selectedOrderIndex]
+                                                                      .status,
+                                                                  onChanged: (value) {
+                                                                    context
+                                                                        .read<
+                                                                          APIDataBaseBloc
+                                                                        >()
+                                                                        .add(
+                                                                          UpdateSelectedOrderStatus(
+                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                            updateStatus:
+                                                                                value!,
+                                                                          ),
+                                                                        );
+                                                                  },
+                                                                ),
+                                                                CustomText(
+                                                                  text:
+                                                                      "Order Pending",
+                                                                  textSize: 20,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(width: 30),
+                                                            Row(
+                                                              children: [
+                                                                Radio(
+                                                                  activeColor:
+                                                                      AppColor
+                                                                          .confirmColor,
+                                                                  value:
+                                                                      "Delivered",
+                                                                  groupValue: apiState
+                                                                      .dataList[apiState
+                                                                          .selectedOrderIndex]
+                                                                      .status,
+                                                                  onChanged: (value) {
+                                                                    context
+                                                                        .read<
+                                                                          APIDataBaseBloc
+                                                                        >()
+                                                                        .add(
+                                                                          UpdateSelectedOrderStatus(
+                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                            updateStatus:
+                                                                                value!,
+                                                                          ),
+                                                                        );
+                                                                  },
+                                                                ),
+                                                                CustomText(
+                                                                  text:
+                                                                      "Order Delivered",
+                                                                  textSize: 20,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ],
+                                                        ),
+                                                  actions:
+                                                      apiState.apiStatus ==
+                                                          Status.loading
+                                                      ? []
+                                                      : [
+                                                          ElevatedButton(
+                                                            style: ElevatedButton.styleFrom(
+                                                              backgroundColor:
+                                                                  darkThemeState
+                                                                      .darkTheme
+                                                                  ? AppColor
+                                                                        .alertBtnDarkColor
+                                                                  : AppColor
+                                                                        .alertBtnLightColor,
+                                                            ),
+                                                            onPressed: () {
+                                                              Navigator.pop(
+                                                                context,
+                                                              );
+                                                            },
+                                                            child: CustomText(
+                                                              text: "OK",
+                                                              textColor:
+                                                                  darkThemeState
+                                                                      .darkTheme
+                                                                  ? AppColor
+                                                                        .textDarkThemeColor
+                                                                  : AppColor
+                                                                        .textLightThemeColor,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                );
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                    );
+                                  },
+                                  icon:
+                                      BlocBuilder<
+                                        DarkThemeBloc,
+                                        DarkThemeState
+                                      >(
+                                        builder: (context, darkThemeState) {
+                                          return Icon(
+                                            Icons.edit,
+                                            size: 40,
+                                            color: darkThemeState.darkTheme
+                                                ? AppColor
+                                                      .editIconDarkThemeColor
+                                                : AppColor
+                                                      .editIconLightThemeColor,
+                                          );
+                                        },
+                                      ),
+                                ),
+                              ],
+                            ),
                           ],
-                        ),
-                      ),
+                        );
+                      },
                     ),
                     BlocBuilder<DarkThemeBloc, DarkThemeState>(
                       builder: (context, darkThemeState) {
-                        return CustomContainer(
-                          height: MediaQuery.of(context).size.height / 2,
-                          width: MediaQuery.of(context).size.height,
-                          backgroundColor: darkThemeState.darkTheme
-                              ? AppColor.darkThemeColor
-                              : AppColor.lightGreyColor,
-                          borderRadius: 10,
-                          child: Expanded(
-                            child: ListView.builder(
-                              itemCount: apiState
-                                  .dataList[apiState.selectedOrderIndex]
-                                  .newOrderDetails!
-                                  .length,
-                              itemBuilder: (context, index) {
-                                return Card(
-                                  color: darkThemeState.darkTheme
-                                      ? AppColor.darkThemeColor
-                                      : AppColor.lightThemeColor,
-                                  child: ListTile(
-                                    leading: CustomText(text: "${index + 1}"),
-                                    title: Row(
-                                      spacing: 10,
-                                      children: [
-                                        Expanded(
-                                          child: CustomText(
-                                            text:
-                                                "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].itemName}",
-                                            maxLinesAllowed: 1,
-                                            textOverflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CustomText(
-                                            alignment: TextAlign.right,
-                                            text:
-                                                "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].price}/-",
-                                            textOverflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CustomText(
-                                            alignment: TextAlign.center,
-                                            text:
-                                                "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].quantity}",
-                                            textOverflow: TextOverflow.ellipsis,
-                                          ),
-                                        ),
-                                        Expanded(
-                                          child: CustomText(
-                                            alignment: TextAlign.end,
-                                            text:
-                                                "₹${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].totalItemsPrice}",
-                                            maxLinesAllowed: 1,
-                                          ),
-                                        ),
-                                      ],
+                        return Column(
+                          spacing: 10,
+                          children: [
+                            CustomContainer(
+                              backgroundColor: darkThemeState.darkTheme
+                                  ? AppColor.containerDarkThemeColor
+                                  : AppColor.containerLightThemeColor,
+                              borderRadius: 10,
+                              child: Padding(
+                                padding: EdgeInsets.only(
+                                  left: 15.0,
+                                  top: 5,
+                                  bottom: 5,
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: orientation == Orientation.portrait
+                                          ? 0
+                                          : 40,
                                     ),
-                                  ),
-                                );
-                              },
+                                    CustomText(text: "#"),
+                                    SizedBox(
+                                      width: orientation == Orientation.portrait
+                                          ? 30
+                                          : 28,
+                                    ),
+                                    CustomText(text: "Items"),
+                                    SizedBox(
+                                      width: orientation == Orientation.portrait
+                                          ? 55
+                                          : 302,
+                                    ),
+                                    CustomText(text: "Price"),
+                                    SizedBox(
+                                      width: orientation == Orientation.portrait
+                                          ? 17
+                                          : 73,
+                                    ),
+                                    CustomText(text: "Quantity"),
+                                    SizedBox(
+                                      width: orientation == Orientation.portrait
+                                          ? 30
+                                          : 210,
+                                    ),
+                                    CustomText(text: "Total"),
+                                  ],
+                                ),
+                              ),
                             ),
-                          ),
+                            CustomContainer(
+                              height: MediaQuery.of(context).size.height / 2,
+                              width: MediaQuery.of(context).size.width,
+                              backgroundColor: darkThemeState.darkTheme
+                                  ? AppColor.containerDarkThemeColor
+                                  : AppColor.containerLightThemeColor,
+                              borderRadius: 10,
+                              child: Expanded(
+                                child: ListView.builder(
+                                  itemCount: apiState
+                                      .dataList[apiState.selectedOrderIndex]
+                                      .newOrderDetails!
+                                      .length,
+                                  itemBuilder: (context, index) {
+                                    return Card(
+                                      color: darkThemeState.darkTheme
+                                          ? AppColor.darkThemeColor
+                                          : AppColor.lightThemeColor,
+                                      child: ListTile(
+                                        leading: CustomText(
+                                          text: "${index + 1}",
+                                        ),
+                                        title: Row(
+                                          spacing: 10,
+                                          children: [
+                                            Expanded(
+                                              child: CustomText(
+                                                text:
+                                                    "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].itemName}",
+                                                maxLinesAllowed: 1,
+                                                textOverflow:
+                                                    TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: CustomText(
+                                                alignment: TextAlign.right,
+                                                text:
+                                                    "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].price}/-",
+                                                textOverflow:
+                                                    TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: CustomText(
+                                                alignment: TextAlign.center,
+                                                text:
+                                                    "${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].quantity}",
+                                                textOverflow:
+                                                    TextOverflow.ellipsis,
+                                              ),
+                                            ),
+                                            Expanded(
+                                              child: CustomText(
+                                                alignment: TextAlign.end,
+                                                text:
+                                                    "₹${apiState.dataList[apiState.selectedOrderIndex].newOrderDetails![index].totalItemsPrice}/-",
+                                                maxLinesAllowed: 1,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),

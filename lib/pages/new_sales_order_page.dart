@@ -397,12 +397,12 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                 ),
                                 Radio(
                                   activeColor: AppColor.confirmColor,
-                                  value: false,
+                                  value: "Pending",
                                   groupValue: newOrderState.isDelivered,
                                   onChanged: (value) {
                                     context.read<NewOrderBloc>().add(
                                       OrderDeliveryStatusChangedEvent(
-                                        isDelivered: false,
+                                        isDelivered: "Pending",
                                       ),
                                     );
                                   },
@@ -411,12 +411,12 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                 SizedBox(width: 30),
                                 Radio(
                                   activeColor: AppColor.confirmColor,
-                                  value: true,
+                                  value: "Delivered",
                                   groupValue: newOrderState.isDelivered,
                                   onChanged: (value) {
                                     context.read<NewOrderBloc>().add(
                                       OrderDeliveryStatusChangedEvent(
-                                        isDelivered: true,
+                                        isDelivered: "Delivered",
                                       ),
                                     );
                                   },

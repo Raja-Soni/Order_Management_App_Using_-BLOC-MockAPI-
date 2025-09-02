@@ -19,7 +19,9 @@ class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
   }
 
   FutureOr<void> initialState(InitialState event, Emitter<NewOrderState> emit) {
-    emit(state.copyWith(totalPrice: 0, isDelivered: false, itemDetails: []));
+    emit(
+      state.copyWith(totalPrice: 0, isDelivered: "Pending", itemDetails: []),
+    );
   }
 
   FutureOr<void> customerNameGivenEvent(
@@ -45,7 +47,7 @@ class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
     SalesOrderListItemModel newOrderItem = SalesOrderListItemModel(
       customer: state.customerName,
       amount: state.totalPrice,
-      status: state.isDelivered ? "Delivered" : "Pending",
+      status: state.isDelivered,
       dateAndTime: DateTime.now().toString(),
       newOrderDetails: state.itemDetails,
     );

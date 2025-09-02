@@ -42,7 +42,7 @@ class OnlineDataBase {
             .toList();
       }
     } on Exception {
-      throw Exception("Error");
+      throw Exception("Error Fetching Data");
     }
     return result;
   }
@@ -52,7 +52,9 @@ class OnlineDataBase {
       Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp/$id"),
     );
     if (response.statusCode != 200) {
-      throw Exception("Response Status: ${response.statusCode}");
+      throw Exception(
+        "Failed to delete Order: Response Status: ${response.statusCode}",
+      );
     }
   }
 
@@ -69,7 +71,23 @@ class OnlineDataBase {
       }),
     );
     if (response.statusCode != 201) {
-      throw Exception("Response Status: ${response.statusCode}");
+      throw Exception(
+        "Failed to add Order: Response Status: ${response.statusCode}",
+      );
+    }
+  }
+
+  Future<void> updateStatus(String id, String newStatus) async {
+    final response = await http.put(
+      Uri.parse("https://68a2c29fc5a31eb7bb1dad0c.mockapi.io/erp_miniapp/$id"),
+      headers: {"Content-Type": "application/json"},
+      body: jsonEncode({"status": newStatus}),
+    );
+
+    if (response.statusCode != 200) {
+      throw Exception(
+        "Failed to update status. Response Status: ${response.statusCode}",
+      );
     }
   }
 }

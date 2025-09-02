@@ -6,7 +6,7 @@ class NewOrderState extends Equatable {
   late final String itemName;
   late final int quantity;
   late final int price;
-  final bool isDelivered;
+  final String isDelivered;
   final int totalPrice;
   final List<NewOrderDetailsItemModel> itemDetails;
 
@@ -16,7 +16,7 @@ class NewOrderState extends Equatable {
     this.quantity = 0,
     this.price = 0,
     this.totalPrice = 0,
-    this.isDelivered = false,
+    this.isDelivered = "Pending",
     this.itemDetails = const [],
   });
 
@@ -25,7 +25,7 @@ class NewOrderState extends Equatable {
     String? itemName,
     int? quantity,
     int? price,
-    bool? isDelivered,
+    String? isDelivered,
     int? totalPrice,
     List<NewOrderDetailsItemModel>? itemDetails,
   }) {

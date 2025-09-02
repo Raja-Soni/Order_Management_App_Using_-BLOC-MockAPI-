@@ -27,5 +27,11 @@ class AppColor {
   static Color switchInactiveTrackColor = Colors.blue.shade100;
   static Color confirmColor = Colors.green;
   static Color cancelColor = Colors.red;
-  static Color lightGreyColor = Colors.grey.shade300;
+  static Color containerDarkThemeColor = Colors.grey.shade800;
+  static Color containerLightThemeColor = Colors.grey.shade400;
+  static Color editIconLightThemeColor = Colors.blueGrey.shade700;
+  static Color editIconDarkThemeColor = Colors.lightBlueAccent.shade200;
+  static Color pendingOrderColor = Colors.orange;
+  static Color deliveredOrderColor = Colors.green;
+  static Color whiteColor = Colors.white;
 }
