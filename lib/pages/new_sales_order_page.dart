@@ -25,6 +25,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
   @override
   Widget build(BuildContext context) {
     final message = ScaffoldMessenger.of(context);
+    final orientation = MediaQuery.of(context).orientation;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -77,22 +78,173 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                               return null;
                             },
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomText(
-                                text: "Add Item",
-                                textBoldness: FontWeight.bold,
-                                textSize: 30,
-                              ),
-                              IconButton(
-                                onPressed: () {
-                                  GlobalKey<FormState> itemFormKey =
-                                      GlobalKey();
-                                  showDialog(
-                                    context: context,
-                                    builder: (dialogContext) {
-                                      return AlertDialog(
+                          if (newOrderState.itemDetails.isEmpty)
+                            SizedBox.shrink()
+                          else
+                            Column(
+                              children: [
+                                CustomContainer(
+                                  backgroundColor: darkModeState.darkTheme
+                                      ? AppColor.containerDarkThemeColor
+                                      : AppColor.containerLightThemeColor,
+                                  borderRadius: 10,
+                                  child: Padding(
+                                    padding: EdgeInsets.only(
+                                      left: 15.0,
+                                      top: 5,
+                                      bottom: 5,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        SizedBox(width: 8),
+                                        CustomText(text: "#"),
+                                        SizedBox(
+                                          width:
+                                              orientation ==
+                                                  Orientation.portrait
+                                              ? 25
+                                              : 28,
+                                        ),
+                                        CustomText(text: "Items"),
+                                        SizedBox(
+                                          width:
+                                              orientation ==
+                                                  Orientation.portrait
+                                              ? 33
+                                              : 270,
+                                        ),
+                                        CustomText(text: "Price"),
+                                        SizedBox(
+                                          width:
+                                              orientation ==
+                                                  Orientation.portrait
+                                              ? 28
+                                              : 58,
+                                        ),
+                                        CustomText(
+                                          text:
+                                              orientation ==
+                                                  Orientation.portrait
+                                              ? "Qty"
+                                              : "Quantity",
+                                        ),
+                                        SizedBox(
+                                          width:
+                                              orientation ==
+                                                  Orientation.portrait
+                                              ? 38
+                                              : 190,
+                                        ),
+                                        CustomText(text: "Total"),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                CustomContainer(
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  borderRadius: 10,
+                                  backgroundColor: darkModeState.darkTheme
+                                      ? AppColor.containerDarkThemeColor
+                                      : AppColor.containerLightThemeColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: ListView.builder(
+                                      itemCount:
+                                          newOrderState.itemDetails.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          child: ListTile(
+                                            leading: CustomText(
+                                              text: "${index + 1}",
+                                            ),
+                                            title: Row(
+                                              spacing: 10,
+                                              children: [
+                                                Expanded(
+                                                  child: CustomText(
+                                                    text:
+                                                        "${newOrderState.itemDetails[index].itemName}",
+                                                    maxLinesAllowed: 1,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    maxLinesAllowed: 1,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                    alignment: TextAlign.right,
+                                                    text:
+                                                        "₹${newOrderState.itemDetails[index].price}",
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    alignment: TextAlign.center,
+                                                    text:
+                                                        "${newOrderState.itemDetails[index].quantity}",
+                                                    maxLinesAllowed: 1,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    alignment: TextAlign.right,
+                                                    text:
+                                                        "₹${newOrderState.itemDetails[index].totalItemsPrice}",
+                                                    maxLinesAllowed: 1,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                GestureDetector(
+                                                  child: Icon(
+                                                    Icons.cancel_outlined,
+                                                    color: AppColor.cancelColor,
+                                                  ),
+                                                  onTap: () {
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          RemoveItemFromList(
+                                                            itemIndex: index,
+                                                          ),
+                                                        );
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          TotalPriceChangedEvent(),
+                                                        );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          GestureDetector(
+                            onTap: () {
+                              {
+                                GlobalKey<FormState> itemFormKey = GlobalKey();
+                                showDialog(
+                                  context: context,
+                                  builder: (dialogContext) {
+                                    return SingleChildScrollView(
+                                      child: AlertDialog(
                                         title: Center(
                                           child: CustomText(
                                             text: "Enter Item Details",
@@ -256,133 +408,40 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                             ],
                                           ),
                                         ),
-                                      );
-                                    },
-                                  );
-                                },
-                                icon: Icon(
-                                  Icons.add,
-                                  size: 40,
-                                  color: darkModeState.darkTheme
-                                      ? AppColor.iconDarkThemeColor
-                                      : AppColor.iconLightThemeColor,
+                                      ),
+                                    );
+                                  },
+                                );
+                              }
+                            },
+                            child: CustomContainer(
+                              backgroundColor: darkModeState.darkTheme
+                                  ? AppColor.containerDarkThemeColor
+                                  : AppColor.containerLightThemeColor,
+                              borderRadius: 10,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    CustomText(
+                                      text: "Add Item",
+                                      textBoldness: FontWeight.bold,
+                                      textSize: 25,
+                                    ),
+                                    Icon(
+                                      Icons.add,
+                                      size: 35,
+                                      color: darkModeState.darkTheme
+                                          ? AppColor.iconDarkThemeColor
+                                          : AppColor.iconLightThemeColor,
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
-                          if (newOrderState.itemDetails.isEmpty)
-                            SizedBox.shrink()
-                          else
-                            Column(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 23.0),
-                                  child: Row(
-                                    children: [
-                                      CustomText(text: "#"),
-                                      SizedBox(width: 30),
-                                      CustomText(text: "Item"),
-                                      SizedBox(width: 45),
-                                      CustomText(text: "Price"),
-                                      SizedBox(width: 20),
-                                      CustomText(text: "Qty"),
-                                      SizedBox(width: 40),
-                                      CustomText(text: "Total"),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(height: 10),
-                                CustomContainer(
-                                  height: 200,
-                                  width: MediaQuery.of(context).size.width,
-                                  borderRadius: 10,
-                                  backgroundColor: darkModeState.darkTheme
-                                      ? AppColor.darkThemeColor
-                                      : AppColor.lightThemeColor,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(5.0),
-                                    child: ListView.builder(
-                                      itemCount:
-                                          newOrderState.itemDetails.length,
-                                      itemBuilder: (context, index) {
-                                        return Card(
-                                          child: ListTile(
-                                            leading: CustomText(
-                                              text: "${index + 1}",
-                                            ),
-                                            title: Row(
-                                              spacing: 10,
-                                              children: [
-                                                Expanded(
-                                                  child: CustomText(
-                                                    text:
-                                                        "${newOrderState.itemDetails[index].itemName}",
-                                                    maxLinesAllowed: 1,
-                                                    textOverflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: CustomText(
-                                                    alignment: TextAlign.right,
-                                                    text:
-                                                        "₹${newOrderState.itemDetails[index].price}",
-                                                    textOverflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: CustomText(
-                                                    alignment: TextAlign.center,
-                                                    text:
-                                                        "${newOrderState.itemDetails[index].quantity}",
-                                                    textOverflow:
-                                                        TextOverflow.ellipsis,
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: CustomText(
-                                                    alignment: TextAlign.right,
-                                                    text:
-                                                        "₹${newOrderState.itemDetails[index].totalItemsPrice}",
-                                                    maxLinesAllowed: 1,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            trailing: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                GestureDetector(
-                                                  child: Icon(
-                                                    Icons.cancel_outlined,
-                                                    color: AppColor.cancelColor,
-                                                  ),
-                                                  onTap: () {
-                                                    context
-                                                        .read<NewOrderBloc>()
-                                                        .add(
-                                                          RemoveItemFromList(
-                                                            itemIndex: index,
-                                                          ),
-                                                        );
-                                                    context
-                                                        .read<NewOrderBloc>()
-                                                        .add(
-                                                          TotalPriceChangedEvent(),
-                                                        );
-                                                  },
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                ),
-                              ],
                             ),
+                          ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.0),
                             child: Row(
