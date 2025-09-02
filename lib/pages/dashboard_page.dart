@@ -102,10 +102,8 @@ class DashboardPage extends StatelessWidget {
                                         icon: Icon(
                                           Icons.tune,
                                           color: darkModeState.darkTheme
-                                              ? AppColor
-                                                    .filterIconDarkThemeColor
-                                              : AppColor
-                                                    .filterIconLightThemeColor,
+                                              ? AppColor.iconDarkThemeColor
+                                              : AppColor.iconLightThemeColor,
                                         ),
                                         iconSize: 25,
                                         padding: EdgeInsets.symmetric(

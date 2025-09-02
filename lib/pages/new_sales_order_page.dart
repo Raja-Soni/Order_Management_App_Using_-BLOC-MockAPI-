@@ -17,17 +17,6 @@ class NewSalesOrderPage extends StatefulWidget {
 
 class NewSalesOrderPageState extends State<NewSalesOrderPage> {
   GlobalKey<FormState> formKey = GlobalKey();
-  String selectedItem = "Select Item";
-  List<String> items = [
-    "Select Item",
-    "Bulb Box",
-    "Fan Box",
-    "Switch Box",
-    "Wire Box",
-    "Socket Box",
-    "Fuse Box",
-  ];
-
   @override
   void initState() {
     super.initState();
@@ -74,7 +63,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                         children: [
                           CustomFormTextField(
                             inputType: TextInputType.name,
-                            hintText: "Enter Name",
+                            hintText: "Enter Customer/Company Name",
                             icon: Icon(Icons.person_outlined),
                             validate: (value) {
                               if (value == null || value.isEmpty) {
@@ -84,89 +73,358 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             },
                             changedValue: (value) {
                               context.read<NewOrderBloc>().add(
-                                NameGivenEvent(name: value!),
+                                CustomerNameGivenEvent(name: value!),
                               );
                               return null;
                             },
                           ),
-                          DropdownButton(
-                            iconSize: 40,
-                            dropdownColor: darkModeState.darkTheme
-                                ? AppColor.darkThemeColor
-                                : AppColor.lightThemeColor,
-                            value: selectedItem,
-                            onChanged: (value) {
-                              selectedItem = value!;
-                              setState(() {});
-                            },
-                            isExpanded: true,
-                            items: items
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e,
-                                    child: CustomText(text: e),
-                                  ),
-                                )
-                                .toList(),
-                          ),
-                          CustomFormTextField(
-                            inputType: TextInputType.number,
-                            hintText: "Enter Quantity",
-                            icon: Icon(Icons.numbers_rounded),
-                            validate: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter Quantity";
-                              }
-                              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                return "Only numbers allowed";
-                              }
-                              int quantity = int.parse(value.toString());
-                              if (quantity < 0) {
-                                return "Quantity must be more than 0";
-                              }
-                              return null;
-                            },
-                            changedValue: (value) {
-                              int quantity = value!.isEmpty
-                                  ? 0
-                                  : int.parse(value);
-                              context.read<NewOrderBloc>().add(
-                                QuantityChangedEvent(quantity: quantity),
-                              );
-                              context.read<NewOrderBloc>().add(
-                                TotalPriceChangedEvent(),
-                              );
-                              return null;
-                            },
-                          ),
-                          CustomFormTextField(
-                            inputType: TextInputType.number,
-                            hintText: "Enter Price",
-                            icon: Icon(Icons.currency_rupee_rounded),
-                            validate: (value) {
-                              if (value == null || value.isEmpty) {
-                                return "Please Enter Price";
-                              }
-                              if (!RegExp(r'^[0-9]+$').hasMatch(value)) {
-                                return "Only numbers allowed";
-                              }
-                              int price = int.parse(value.toString());
-                              if (price < 0) {
-                                return "Price must be more than 0";
-                              }
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              CustomText(
+                                text: "Add Item",
+                                textBoldness: FontWeight.bold,
+                                textSize: 30,
+                              ),
+                              IconButton(
+                                onPressed: () {
+                                  GlobalKey<FormState> itemFormKey =
+                                      GlobalKey();
+                                  showDialog(
+                                    context: context,
+                                    builder: (dialogContext) {
+                                      return AlertDialog(
+                                        title: Center(
+                                          child: CustomText(
+                                            text: "Enter Item Details",
+                                            textSize: 30,
+                                            textBoldness: FontWeight.bold,
+                                          ),
+                                        ),
+                                        content: Form(
+                                          key: itemFormKey,
+                                          child: Column(
+                                            spacing: 10,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              CustomFormTextField(
+                                                inputType: TextInputType.name,
+                                                hintText: "Enter Item Name",
+                                                icon: Icon(
+                                                  Icons.person_outlined,
+                                                ),
+                                                validate: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return "Please Enter Item Name";
+                                                  }
+                                                  return null;
+                                                },
+                                                savedValue: (value) {
+                                                  context
+                                                      .read<NewOrderBloc>()
+                                                      .add(
+                                                        NewItemDetails(
+                                                          itemName: value!,
+                                                        ),
+                                                      );
+                                                  return null;
+                                                },
+                                              ),
+                                              CustomFormTextField(
+                                                inputType: TextInputType.number,
+                                                hintText: "Enter Quantity",
+                                                icon: Icon(
+                                                  Icons.numbers_rounded,
+                                                ),
+                                                validate: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return "Please Enter Quantity";
+                                                  }
+                                                  if (!RegExp(
+                                                    r'^[0-9]+$',
+                                                  ).hasMatch(value)) {
+                                                    return "Only numbers allowed";
+                                                  }
+                                                  int quantity = int.parse(
+                                                    value.toString(),
+                                                  );
+                                                  if (quantity < 0) {
+                                                    return "Quantity must be more than 0";
+                                                  }
 
-                              return null;
-                            },
-                            changedValue: (value) {
-                              int price = value!.isEmpty ? 0 : int.parse(value);
-                              context.read<NewOrderBloc>().add(
-                                PriceChangedEvent(price: price),
-                              );
-                              context.read<NewOrderBloc>().add(
-                                TotalPriceChangedEvent(),
-                              );
-                              return null;
-                            },
+                                                  return null;
+                                                },
+                                                savedValue: (value) {
+                                                  int quantity = int.parse(
+                                                    value.toString(),
+                                                  );
+                                                  context
+                                                      .read<NewOrderBloc>()
+                                                      .add(
+                                                        NewItemDetails(
+                                                          quantity: quantity,
+                                                        ),
+                                                      );
+                                                  return null;
+                                                },
+                                              ),
+                                              CustomFormTextField(
+                                                inputType: TextInputType.number,
+                                                hintText: "Enter Price",
+                                                icon: Icon(
+                                                  Icons.currency_rupee_rounded,
+                                                ),
+                                                validate: (value) {
+                                                  if (value == null ||
+                                                      value.isEmpty) {
+                                                    return "Please Enter Price";
+                                                  }
+                                                  if (!RegExp(
+                                                    r'^[0-9]+$',
+                                                  ).hasMatch(value)) {
+                                                    return "Only numbers allowed";
+                                                  }
+                                                  int price = int.parse(
+                                                    value.toString(),
+                                                  );
+                                                  if (price < 0) {
+                                                    return "Price must be more than 0";
+                                                  }
+
+                                                  return null;
+                                                },
+                                                savedValue: (value) {
+                                                  int price = int.parse(
+                                                    value.toString(),
+                                                  );
+                                                  context
+                                                      .read<NewOrderBloc>()
+                                                      .add(
+                                                        NewItemDetails(
+                                                          price: price,
+                                                        ),
+                                                      );
+                                                  return null;
+                                                },
+                                              ),
+                                              CustomButton(
+                                                width: MediaQuery.of(
+                                                  dialogContext,
+                                                ).size.width,
+                                                buttonText: "Add Item",
+                                                callback: () {
+                                                  bool isValidState =
+                                                      itemFormKey.currentState!
+                                                          .validate();
+
+                                                  if (isValidState) {
+                                                    itemFormKey.currentState!
+                                                        .save();
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          OrderItemDetailedList(),
+                                                        );
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          TotalPriceChangedEvent(),
+                                                        );
+
+                                                    Navigator.of(
+                                                      dialogContext,
+                                                    ).pop();
+                                                  }
+                                                },
+                                              ),
+                                              CustomButton(
+                                                backgroundColor:
+                                                    AppColor.cancelColor,
+                                                width: MediaQuery.of(
+                                                  dialogContext,
+                                                ).size.width,
+                                                buttonText: "Cancel",
+                                                callback: () {
+                                                  Navigator.of(
+                                                    dialogContext,
+                                                  ).pop();
+                                                },
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                },
+                                icon: Icon(
+                                  Icons.add,
+                                  size: 40,
+                                  color: darkModeState.darkTheme
+                                      ? AppColor.iconDarkThemeColor
+                                      : AppColor.iconLightThemeColor,
+                                ),
+                              ),
+                            ],
+                          ),
+                          if (newOrderState.itemDetails.isEmpty)
+                            SizedBox.shrink()
+                          else
+                            Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 23.0),
+                                  child: Row(
+                                    children: [
+                                      CustomText(text: "#"),
+                                      SizedBox(width: 30),
+                                      CustomText(text: "Item"),
+                                      SizedBox(width: 45),
+                                      CustomText(text: "Price"),
+                                      SizedBox(width: 20),
+                                      CustomText(text: "Qty"),
+                                      SizedBox(width: 40),
+                                      CustomText(text: "Total"),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: 10),
+                                CustomContainer(
+                                  height: 200,
+                                  width: MediaQuery.of(context).size.width,
+                                  borderRadius: 10,
+                                  backgroundColor: darkModeState.darkTheme
+                                      ? AppColor.darkThemeColor
+                                      : AppColor.lightThemeColor,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(5.0),
+                                    child: ListView.builder(
+                                      itemCount:
+                                          newOrderState.itemDetails.length,
+                                      itemBuilder: (context, index) {
+                                        return Card(
+                                          child: ListTile(
+                                            leading: CustomText(
+                                              text: "${index + 1}",
+                                            ),
+                                            title: Row(
+                                              spacing: 10,
+                                              children: [
+                                                Expanded(
+                                                  child: CustomText(
+                                                    text:
+                                                        "${newOrderState.itemDetails[index].itemName}",
+                                                    maxLinesAllowed: 1,
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    alignment: TextAlign.right,
+                                                    text:
+                                                        "₹${newOrderState.itemDetails[index].price}",
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    alignment: TextAlign.center,
+                                                    text:
+                                                        "${newOrderState.itemDetails[index].quantity}",
+                                                    textOverflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: CustomText(
+                                                    alignment: TextAlign.right,
+                                                    text:
+                                                        "₹${newOrderState.itemDetails[index].totalItemsPrice}",
+                                                    maxLinesAllowed: 1,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            trailing: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                GestureDetector(
+                                                  child: Icon(
+                                                    Icons.cancel_outlined,
+                                                    color: AppColor.cancelColor,
+                                                  ),
+                                                  onTap: () {
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          RemoveItemFromList(
+                                                            itemIndex: index,
+                                                          ),
+                                                        );
+                                                    context
+                                                        .read<NewOrderBloc>()
+                                                        .add(
+                                                          TotalPriceChangedEvent(),
+                                                        );
+                                                  },
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 5.0),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: CustomText(
+                                    text: "Status:",
+                                    textSize: 22,
+                                    textBoldness: FontWeight.w500,
+                                  ),
+                                ),
+                                Radio(
+                                  activeColor: AppColor.confirmColor,
+                                  value: false,
+                                  groupValue: newOrderState.isDelivered,
+                                  onChanged: (value) {
+                                    context.read<NewOrderBloc>().add(
+                                      OrderDeliveryStatusChangedEvent(
+                                        isDelivered: false,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                CustomText(text: "Pending", textSize: 20),
+                                SizedBox(width: 30),
+                                Radio(
+                                  activeColor: AppColor.confirmColor,
+                                  value: true,
+                                  groupValue: newOrderState.isDelivered,
+                                  onChanged: (value) {
+                                    context.read<NewOrderBloc>().add(
+                                      OrderDeliveryStatusChangedEvent(
+                                        isDelivered: true,
+                                      ),
+                                    );
+                                  },
+                                ),
+                                CustomText(text: "Delivered", textSize: 20),
+                              ],
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -196,7 +454,47 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             callback: () {
                               bool isValidState = formKey.currentState!
                                   .validate();
-                              if (isValidState) {
+                              if (newOrderState.itemDetails.isEmpty) {
+                                message.showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.cancel,
+                                          color: AppColor.cancelColor,
+                                        ),
+                                        CustomText(
+                                          text: " Add at least 1 item",
+                                          textBoldness: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              } else if (newOrderState.totalPrice <= 0) {
+                                message.showSnackBar(
+                                  SnackBar(
+                                    content: Row(
+                                      children: [
+                                        Icon(
+                                          Icons.info,
+                                          color: AppColor.cancelColor,
+                                        ),
+                                        CustomText(
+                                          text:
+                                              " Total Amount must be more than zero",
+                                          textBoldness: FontWeight.bold,
+                                        ),
+                                      ],
+                                    ),
+                                    duration: Duration(seconds: 1),
+                                  ),
+                                );
+                              }
+                              if (isValidState &&
+                                  newOrderState.itemDetails.isNotEmpty &&
+                                  newOrderState.totalPrice > 0) {
                                 message
                                     .showSnackBar(
                                       SnackBar(
@@ -219,13 +517,14 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                     .closed
                                     .then((_) {
                                       ItemModel newOrderItem = ItemModel(
-                                        customer: newOrderState.name,
+                                        customer: newOrderState.customerName,
                                         amount: newOrderState.totalPrice,
-                                        status:
-                                            (newOrderState.totalPrice % 2) == 0
-                                            ? "Pending"
-                                            : "Delivered",
+                                        status: newOrderState.isDelivered
+                                            ? "Delivered"
+                                            : "Pending",
                                         dateAndTime: DateTime.now().toString(),
+                                        newOrderDetails:
+                                            newOrderState.itemDetails,
                                       );
                                       if (!context.mounted) return;
                                       context.read<NewOrderBloc>().add(
@@ -239,32 +538,13 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                         );
                                         context.read<AlertPopUpBloc>().add(
                                           InitHighOrderAlert(
-                                            name: newOrderState.name,
+                                            name: newOrderState.customerName,
                                             amount: newOrderState.totalPrice,
                                           ),
                                         );
                                       }
                                       navigator.pop();
                                     });
-                              } else {
-                                message.showSnackBar(
-                                  SnackBar(
-                                    content: Row(
-                                      spacing: 10,
-                                      children: [
-                                        Icon(
-                                          Icons.cancel,
-                                          color: AppColor.cancelColor,
-                                        ),
-                                        CustomText(
-                                          text: "Failed to add order",
-                                          textBoldness: FontWeight.bold,
-                                        ),
-                                      ],
-                                    ),
-                                    duration: Duration(milliseconds: 600),
-                                  ),
-                                );
                               }
                             },
                           ),

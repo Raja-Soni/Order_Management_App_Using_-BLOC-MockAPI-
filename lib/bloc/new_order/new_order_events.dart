@@ -8,9 +8,9 @@ abstract class NewOrderEvents extends Equatable {
 
 class InitialState extends NewOrderEvents {}
 
-class NameGivenEvent extends NewOrderEvents {
+class CustomerNameGivenEvent extends NewOrderEvents {
   final String name;
-  NameGivenEvent({required this.name});
+  CustomerNameGivenEvent({required this.name});
 
   @override
   List<Object?> get props => [name];
@@ -19,7 +19,6 @@ class NameGivenEvent extends NewOrderEvents {
 class QuantityChangedEvent extends NewOrderEvents {
   final int quantity;
   QuantityChangedEvent({required this.quantity});
-
   @override
   List<Object?> get props => [quantity];
 }
@@ -34,10 +33,35 @@ class PriceChangedEvent extends NewOrderEvents {
 
 class TotalPriceChangedEvent extends NewOrderEvents {}
 
+class OrderDeliveryStatusChangedEvent extends NewOrderEvents {
+  final bool isDelivered;
+  OrderDeliveryStatusChangedEvent({required this.isDelivered});
+}
+
+class OrderItemDetailedList extends NewOrderEvents {}
+
 class AddNewOrderEvent extends NewOrderEvents {
   final ItemModel itemModel;
   AddNewOrderEvent({required this.itemModel});
 
   @override
   List<Object?> get props => [itemModel];
+}
+
+class NewItemDetails extends NewOrderEvents {
+  final String? itemName;
+  final int? price;
+  final int? quantity;
+  NewItemDetails({this.price, this.quantity, this.itemName});
+
+  @override
+  List<Object?> get props => [itemName, price, quantity];
+}
+
+class RemoveItemFromList extends NewOrderEvents {
+  final int itemIndex;
+  RemoveItemFromList({required this.itemIndex});
+
+  @override
+  List<Object?> get props => [itemIndex];
 }

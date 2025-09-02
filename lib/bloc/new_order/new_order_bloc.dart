@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:erp_using_api/bloc/api_data/api_bloc_events_state.dart';
 import 'package:erp_using_api/bloc/new_order/new_order_bloc_events_state.dart';
+import 'package:erp_using_api/model/item_model.dart';
 
 import '../../model/sales_order.dart';
 
@@ -10,54 +11,95 @@ class NewOrderBloc extends Bloc<NewOrderEvents, NewOrderState> {
   APIDataBaseBloc apiBloc;
   NewOrderBloc(this.apiBloc) : super(NewOrderState()) {
     on<InitialState>(initialState);
-    on<NameGivenEvent>(nameGivenEvent);
-    on<QuantityChangedEvent>(quantityChangedEvent);
-    on<PriceChangedEvent>(priceChangedEvent);
+    on<CustomerNameGivenEvent>(customerNameGivenEvent);
     on<TotalPriceChangedEvent>(totalPriceChangedEvent);
+    on<OrderDeliveryStatusChangedEvent>(orderDeliveryStatusChangedEvent);
+    on<OrderItemDetailedList>(orderItemDetailedList);
     on<AddNewOrderEvent>(addNewOrderEvent);
+    on<RemoveItemFromList>(removeItemFromList);
+    on<NewItemDetails>(newItemDetails);
   }
 
   FutureOr<void> initialState(InitialState event, Emitter<NewOrderState> emit) {
-    emit(state.copyWith(totalPrice: 0, price: 0, quantity: 0, name: ""));
+    emit(state.copyWith(totalPrice: 0, isDelivered: false, itemDetails: []));
   }
 
-  FutureOr<void> nameGivenEvent(
-    NameGivenEvent event,
+  FutureOr<void> customerNameGivenEvent(
+    CustomerNameGivenEvent event,
     Emitter<NewOrderState> emit,
   ) {
-    emit(state.copyWith(name: event.name));
-  }
-
-  FutureOr<void> quantityChangedEvent(
-    QuantityChangedEvent event,
-    Emitter<NewOrderState> emit,
-  ) {
-    emit(state.copyWith(quantity: event.quantity));
-  }
-
-  FutureOr<void> priceChangedEvent(
-    PriceChangedEvent event,
-    Emitter<NewOrderState> emit,
-  ) {
-    emit(state.copyWith(price: event.price));
+    emit(state.copyWith(customerName: event.name));
   }
 
   FutureOr<void> totalPriceChangedEvent(
     TotalPriceChangedEvent event,
     Emitter<NewOrderState> emit,
   ) {
-    int price = state.price;
-    int quantity = state.quantity;
-    int totalPrice = price * quantity;
-    if (totalPrice.isNaN) {
-      emit(state.copyWith(totalPrice: 0));
-    } else {
-      emit(state.copyWith(totalPrice: totalPrice));
-    }
+    int totalPrice = state.itemDetails.fold(
+      0,
+      (previousValue, element) =>
+          previousValue + (element.totalItemsPrice ?? 0),
+    );
+    emit(state.copyWith(totalPrice: totalPrice));
   }
 
   addNewOrderEvent(AddNewOrderEvent event, Emitter<NewOrderState> emit) async {
     ItemModel newOrder = event.itemModel;
     apiBloc.add(AddItem(item: newOrder));
+  }
+
+  FutureOr<void> orderDeliveryStatusChangedEvent(
+    OrderDeliveryStatusChangedEvent event,
+    Emitter<NewOrderState> emit,
+  ) {
+    emit(state.copyWith(isDelivered: event.isDelivered));
+  }
+
+  FutureOr<void> orderItemDetailedList(
+    OrderItemDetailedList event,
+    Emitter<NewOrderState> emit,
+  ) {
+    final List<NewOrderDetailsItemModel> updatedList =
+        List.from(state.itemDetails)..add(
+          NewOrderDetailsItemModel(
+            itemName: state.itemName,
+            quantity: state.quantity,
+            price: state.price,
+            totalItemsPrice: (state.quantity * state.price),
+          ),
+        );
+    emit(
+      state.copyWith(
+        itemDetails: updatedList,
+        price: 0,
+        quantity: 0,
+        itemName: "",
+        totalPrice: 0,
+      ),
+    );
+  }
+
+  FutureOr<void> removeItemFromList(
+    RemoveItemFromList event,
+    Emitter<NewOrderState> emit,
+  ) {
+    final List<NewOrderDetailsItemModel> updatedList = List.from(
+      state.itemDetails,
+    );
+    updatedList.removeAt(event.itemIndex);
+    emit(state.copyWith(itemDetails: updatedList));
+  }
+
+  FutureOr<void> newItemDetails(
+    NewItemDetails event,
+    Emitter<NewOrderState> emit,
+  ) {
+    emit(
+      state.copyWith(
+        itemName: event.itemName,
+        price: event.price,
+        quantity: event.quantity,
+      ),
+    );
   }
 }

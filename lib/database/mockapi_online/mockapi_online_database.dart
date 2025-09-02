@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 
+import '../../model/item_model.dart';
 import '../../model/sales_order.dart';
 
 class OnlineDataBase {
@@ -32,6 +33,11 @@ class OnlineDataBase {
                 amount: e['amount'] as int,
                 status: e['status'] as String,
                 dateAndTime: e['datetime'] as String,
+                newOrderDetails:
+                    (e['orderdetail'] as List<dynamic>?)
+                        ?.map((item) => NewOrderDetailsItemModel.fromJson(item))
+                        .toList() ??
+                    [],
               ),
             )
             .toList();
@@ -60,6 +66,7 @@ class OnlineDataBase {
         "amount": item.amount,
         "status": item.status,
         "datetime": item.dateAndTime,
+        "orderdetail": item.newOrderDetails?.map((e) => e.toJson()).toList(),
       }),
     );
     if (response.statusCode != 201) {
