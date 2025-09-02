@@ -27,4 +27,5 @@ class AppColor {
   static Color switchInactiveTrackColor = Colors.blue.shade100;
   static Color confirmColor = Colors.green;
   static Color cancelColor = Colors.red;
+  static Color lightGreyColor = Colors.grey.shade300;
 }

@@ -55,7 +55,7 @@ class MyApp extends StatelessWidget {
                 backgroundColor: AppColor.appbarLightThemeColor,
               ),
             ),
-            initialRoute: RouteNames.homePage,
+            initialRoute: RouteNames.myHomePage,
             onGenerateRoute: Routes.generateRoute,
           );
         },

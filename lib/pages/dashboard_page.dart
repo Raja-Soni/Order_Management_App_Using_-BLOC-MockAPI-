@@ -10,7 +10,6 @@ import '../utils/enums.dart';
 
 class DashboardPage extends StatelessWidget {
   const DashboardPage({super.key});
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -227,103 +226,123 @@ class DashboardPage extends StatelessWidget {
                                               color: darkModeState.darkTheme
                                                   ? AppColor.darkThemeColor
                                                   : AppColor.lightThemeColor,
-                                              child: ListTile(
-                                                minLeadingWidth: 0.0,
-                                                textColor:
-                                                    darkModeState.darkTheme
-                                                    ? AppColor
-                                                          .textDarkThemeColor
-                                                    : AppColor
-                                                          .textLightThemeColor,
-                                                isThreeLine: true,
-                                                leading: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: 3.0,
+                                              child: GestureDetector(
+                                                onTap: () {
+                                                  context
+                                                      .read<APIDataBaseBloc>()
+                                                      .add(
+                                                        DetailedOrderPage(
+                                                          selectedOrderIndex:
+                                                              index,
+                                                        ),
+                                                      );
+                                                  Navigator.pushNamed(
+                                                    context,
+                                                    RouteNames
+                                                        .detailedOrderPage,
+                                                  );
+                                                },
+                                                child: ListTile(
+                                                  minLeadingWidth: 0.0,
+                                                  textColor:
+                                                      darkModeState.darkTheme
+                                                      ? AppColor
+                                                            .textDarkThemeColor
+                                                      : AppColor
+                                                            .textLightThemeColor,
+                                                  isThreeLine: true,
+                                                  leading: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top: 3.0,
+                                                    ),
+                                                    child: CustomText(
+                                                      textSize: 20,
+                                                      text:
+                                                          "${(index + 1).toString()})",
+                                                    ),
                                                   ),
-                                                  child: CustomText(
+
+                                                  title: CustomText(
                                                     textSize: 20,
                                                     text:
-                                                        "${(index + 1).toString()})",
+                                                        dataList[index].customer
+                                                            .toString()
+                                                            .substring(0, 1)
+                                                            .toUpperCase() +
+                                                        dataList[index].customer
+                                                            .toString()
+                                                            .substring(1),
                                                   ),
-                                                ),
-
-                                                title: CustomText(
-                                                  textSize: 20,
-                                                  text:
-                                                      dataList[index].customer
-                                                          .toString()
-                                                          .substring(0, 1)
-                                                          .toUpperCase() +
-                                                      dataList[index].customer
-                                                          .toString()
-                                                          .substring(1),
-                                                ),
-                                                subtitle: CustomText(
-                                                  textSize: 16,
-                                                  text:
-                                                      '${dataList[index].dateAndTime.toString().split(' ').first} \n₹ ${dataList[index].amount}/-',
-                                                ),
-                                                trailing: Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.end,
-                                                  spacing: 5,
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    CustomContainer(
-                                                      height: 25,
-                                                      width: 90,
-                                                      backgroundColor:
-                                                          dataList[index]
-                                                                  .status ==
-                                                              "Delivered"
-                                                          ? Colors.green
-                                                          : Colors.orange,
-                                                      borderRadius: 20,
-                                                      child: Center(
-                                                        child: CustomText(
-                                                          text: dataList[index]
-                                                              .status
-                                                              .toString(),
-                                                          textSize: 15,
-                                                          textColor:
-                                                              Colors.white,
-                                                          textBoldness:
-                                                              FontWeight.bold,
+                                                  subtitle: CustomText(
+                                                    textSize: 16,
+                                                    text:
+                                                        '${dataList[index].dateAndTime.toString().split(' ').first} \n₹ ${dataList[index].amount}/-',
+                                                  ),
+                                                  trailing: Row(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment.end,
+                                                    spacing: 5,
+                                                    mainAxisSize:
+                                                        MainAxisSize.min,
+                                                    children: [
+                                                      CustomContainer(
+                                                        height: 25,
+                                                        width: 90,
+                                                        backgroundColor:
+                                                            dataList[index]
+                                                                    .status ==
+                                                                "Delivered"
+                                                            ? Colors.green
+                                                            : Colors.orange,
+                                                        borderRadius: 20,
+                                                        child: Center(
+                                                          child: CustomText(
+                                                            text:
+                                                                dataList[index]
+                                                                    .status
+                                                                    .toString(),
+                                                            textSize: 15,
+                                                            textColor:
+                                                                Colors.white,
+                                                            textBoldness:
+                                                                FontWeight.bold,
+                                                          ),
                                                         ),
                                                       ),
-                                                    ),
-                                                    IconButton(
-                                                      padding: EdgeInsets.zero,
-                                                      alignment:
-                                                          AlignmentGeometry.xy(
-                                                            3.3,
-                                                            3.3,
-                                                          ),
-                                                      highlightColor:
-                                                          Colors.red.shade200,
-                                                      onPressed: () {
-                                                        context
-                                                            .read<
-                                                              APIDataBaseBloc
-                                                            >()
-                                                            .add(
-                                                              DeleteItem(
-                                                                id: dataList[index]
-                                                                    .id,
-                                                                filter:
-                                                                    apiDbState
-                                                                        .filter,
-                                                              ),
-                                                            );
-                                                      },
-                                                      icon: Icon(
-                                                        Icons.delete,
-                                                        color: Colors.redAccent,
-                                                        size: 34,
+                                                      IconButton(
+                                                        padding:
+                                                            EdgeInsets.zero,
+                                                        alignment:
+                                                            AlignmentGeometry.xy(
+                                                              3.3,
+                                                              3.3,
+                                                            ),
+                                                        highlightColor:
+                                                            Colors.red.shade200,
+                                                        onPressed: () {
+                                                          context
+                                                              .read<
+                                                                APIDataBaseBloc
+                                                              >()
+                                                              .add(
+                                                                DeleteItem(
+                                                                  id: dataList[index]
+                                                                      .id,
+                                                                  filter:
+                                                                      apiDbState
+                                                                          .filter,
+                                                                ),
+                                                              );
+                                                        },
+                                                        icon: Icon(
+                                                          Icons.delete,
+                                                          color:
+                                                              Colors.redAccent,
+                                                          size: 34,
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
                                             );

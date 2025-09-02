@@ -38,7 +38,14 @@ class DeleteItem extends APIDataBaseEvents {
 class AddItem extends APIDataBaseEvents {
   final SalesOrderListItemModel? item;
   AddItem({required this.item});
-
   @override
   List<Object?> get props => [item];
+}
+
+class DetailedOrderPage extends APIDataBaseEvents {
+  final int selectedOrderIndex;
+  DetailedOrderPage({required this.selectedOrderIndex});
+
+  @override
+  List<Object?> get props => [selectedOrderIndex];
 }

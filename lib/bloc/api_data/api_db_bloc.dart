@@ -16,6 +16,7 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     on<ApplyFilter>(applyFilter);
     on<DeleteItem>(deleteItem);
     on<AddItem>(addItem);
+    on<DetailedOrderPage>(detailedOrderPage);
   }
 
   void fetchOnlineData(
@@ -157,5 +158,12 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
     } else {
       return [];
     }
+  }
+
+  FutureOr<void> detailedOrderPage(
+    DetailedOrderPage event,
+    Emitter<APIDataBaseStates> emit,
+  ) {
+    emit(state.copyWith(selectedOrderIndex: event.selectedOrderIndex));
   }
 }

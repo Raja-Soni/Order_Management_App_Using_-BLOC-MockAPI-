@@ -11,6 +11,7 @@ class APIDataBaseStates extends Equatable {
   final int page;
   final int limit;
   final bool hasMoreData;
+  final int selectedOrderIndex;
 
   const APIDataBaseStates({
     this.apiStatus = Status.loading,
@@ -20,6 +21,7 @@ class APIDataBaseStates extends Equatable {
     this.page = 1,
     this.hasMoreData = true,
     this.limit = 10,
+    this.selectedOrderIndex = 0,
   });
 
   APIDataBaseStates copyWith({
@@ -30,6 +32,7 @@ class APIDataBaseStates extends Equatable {
     int? page,
     bool? hasMoreData,
     int? limit,
+    int? selectedOrderIndex,
   }) {
     return APIDataBaseStates(
       apiStatus: apiStatus ?? this.apiStatus,
@@ -39,6 +42,7 @@ class APIDataBaseStates extends Equatable {
       page: page ?? this.page,
       limit: limit ?? this.limit,
       hasMoreData: hasMoreData ?? this.hasMoreData,
+      selectedOrderIndex: selectedOrderIndex ?? this.selectedOrderIndex,
     );
   }
 
@@ -51,5 +55,6 @@ class APIDataBaseStates extends Equatable {
     page,
     limit,
     hasMoreData,
+    selectedOrderIndex,
   ];
 }
