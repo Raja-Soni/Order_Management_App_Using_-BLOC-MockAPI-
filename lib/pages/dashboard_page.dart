@@ -136,6 +136,12 @@ class DashboardPage extends StatelessWidget {
                                               text: "Delivered Orders",
                                             ),
                                           ),
+                                          DropdownMenuItem(
+                                            value: Filters.cancelled,
+                                            child: CustomText(
+                                              text: "Cancelled Orders",
+                                            ),
+                                          ),
                                         ],
                                         onChanged: (value) {
                                           if (value != null) {
@@ -312,11 +318,11 @@ class DashboardPage extends StatelessWidget {
                                                         height: 25,
                                                         width: 90,
                                                         backgroundColor:
-                                                            dataList[index]
-                                                                    .status ==
-                                                                "Delivered"
-                                                            ? Colors.green
-                                                            : Colors.orange,
+                                                            getStatusColor(
+                                                              dataList[index]
+                                                                  .status
+                                                                  .toString(),
+                                                            ),
                                                         borderRadius: 20,
                                                         child: Center(
                                                           child: CustomText(

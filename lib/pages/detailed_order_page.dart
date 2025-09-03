@@ -127,14 +127,13 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                                     CustomContainer(
                                       height: 30,
                                       width: 120,
-                                      backgroundColor:
-                                          apiState
-                                                  .dataList[apiState
-                                                      .selectedOrderIndex]
-                                                  .status ==
-                                              "Delivered"
-                                          ? AppColor.deliveredOrderColor
-                                          : AppColor.pendingOrderColor,
+                                      backgroundColor: getStatusColor(
+                                        apiState
+                                            .dataList[apiState
+                                                .selectedOrderIndex]
+                                            .status
+                                            .toString(),
+                                      ),
                                       borderRadius: 20,
                                       child: Center(
                                         child: CustomText(
@@ -265,6 +264,40 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                                                                 CustomText(
                                                                   text:
                                                                       "Order Delivered",
+                                                                  textSize: 20,
+                                                                ),
+                                                              ],
+                                                            ),
+                                                            SizedBox(width: 30),
+                                                            Row(
+                                                              children: [
+                                                                Radio(
+                                                                  activeColor:
+                                                                      AppColor
+                                                                          .confirmColor,
+                                                                  value:
+                                                                      "Cancelled",
+                                                                  groupValue: apiState
+                                                                      .dataList[apiState
+                                                                          .selectedOrderIndex]
+                                                                      .status,
+                                                                  onChanged: (value) {
+                                                                    context
+                                                                        .read<
+                                                                          APIDataBaseBloc
+                                                                        >()
+                                                                        .add(
+                                                                          UpdateSelectedOrderStatus(
+                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                            updateStatus:
+                                                                                value!,
+                                                                          ),
+                                                                        );
+                                                                  },
+                                                                ),
+                                                                CustomText(
+                                                                  text:
+                                                                      "Order Cancelled",
                                                                   textSize: 20,
                                                                 ),
                                                               ],

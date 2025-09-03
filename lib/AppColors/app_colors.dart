@@ -33,6 +33,7 @@ class AppColor {
   static Color editIconDarkThemeColor = Colors.lightBlueAccent.shade200;
   static Color pendingOrderColor = Colors.orange;
   static Color deliveredOrderColor = Colors.green;
+  static Color cancelledOrderColor = Colors.redAccent;
   static Color whiteColor = Colors.white;
   static Color amountTextLightThemeColor = Color(0xFF2E7D32);
   static Color amountTextDarkThemeColor = Colors.blue;

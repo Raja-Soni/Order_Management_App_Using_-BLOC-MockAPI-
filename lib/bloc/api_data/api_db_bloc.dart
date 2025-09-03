@@ -156,6 +156,8 @@ class APIDataBaseBloc extends Bloc<APIDataBaseEvents, APIDataBaseStates> {
       return value.where((item) => item.status == "Delivered").toList();
     } else if (filter == Filters.pending) {
       return value.where((item) => item.status == "Pending").toList();
+    } else if (filter == Filters.cancelled) {
+      return value.where((item) => item.status == "Cancelled").toList();
     } else {
       return [];
     }
