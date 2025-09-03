@@ -381,6 +381,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                                 },
                                               ),
                                               CustomButton(
+                                                backgroundColor:
+                                                    darkModeState.darkTheme
+                                                    ? AppColor.darkThemeColor
+                                                    : AppColor.confirmColor,
                                                 width: MediaQuery.of(
                                                   dialogContext,
                                                 ).size.width,
@@ -412,7 +416,9 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               ),
                                               CustomButton(
                                                 backgroundColor:
-                                                    AppColor.cancelColor,
+                                                    darkModeState.darkTheme
+                                                    ? AppColor.darkThemeColor
+                                                    : AppColor.cancelColor,
                                                 width: MediaQuery.of(
                                                   dialogContext,
                                                 ).size.width,
@@ -524,6 +530,9 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             ),
                           ),
                           CustomButton(
+                            backgroundColor: darkModeState.darkTheme
+                                ? AppColor.darkThemeColor
+                                : AppColor.confirmColor,
                             width: MediaQuery.of(context).size.width,
                             buttonText: "Add Order",
                             callback: () {
@@ -612,7 +621,9 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             },
                           ),
                           CustomButton(
-                            backgroundColor: AppColor.cancelColor,
+                            backgroundColor: darkModeState.darkTheme
+                                ? AppColor.darkThemeColor
+                                : AppColor.cancelColor,
                             width: MediaQuery.of(context).size.width,
                             buttonText: "Cancel",
                             callback: () {
