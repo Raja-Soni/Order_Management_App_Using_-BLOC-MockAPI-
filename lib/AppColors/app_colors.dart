@@ -2,18 +2,18 @@ import 'package:flutter/material.dart';
 
 class AppColor {
   static Color transparentColor = Colors.transparent;
-  static Color scaffoldLightBackgroundColor = Colors.white;
-  static Color scaffoldDarkBackgroundColor = Colors.black;
+  static Color scaffoldLightBackgroundColor = Colors.blueGrey.shade50;
+  static Color scaffoldDarkBackgroundColor = Colors.grey.shade900;
   static Color circularProgressLightColor = Colors.black;
   static Color circularProgressDarkColor = Colors.white;
-  static Color appbarDarkThemeColor = Colors.grey.shade900;
+  static Color appbarDarkThemeColor = Colors.black;
   static Color appbarLightThemeColor = Colors.blue;
   static Color appbarTitleTextColor = Colors.white;
   static Color darkThemeColor = Colors.grey[850]!;
   static Color lightThemeColor = Colors.white;
   static Color dividerLightColor = Colors.grey.shade900;
   static Color dividerDarkColor = Colors.white54;
-  static Color buttonDarkThemeColor = Colors.grey.shade900;
+  static Color buttonDarkThemeColor = Colors.black;
   static Color buttonLightThemeColor = Colors.blue;
   static Color alertBtnTextLightColor = Colors.black;
   static Color alertBtnTextDarkColor = Colors.white;
@@ -34,4 +34,11 @@ class AppColor {
   static Color pendingOrderColor = Colors.orange;
   static Color deliveredOrderColor = Colors.green;
   static Color whiteColor = Colors.white;
+  static Color amountTextLightThemeColor = Color(0xFF2E7D32);
+  static Color amountTextDarkThemeColor = Colors.blue;
+  static Color darkGreyColor = Colors.grey.shade900;
+  static Color blueGreyColor = Colors.blueGrey;
+  static Color darkBlueGreyColor = Colors.blueGrey.shade900;
+  static Color dialogBackgroundLightThemeColor = Colors.white;
+  static Color dialogBackgroundDarkThemeColor = Colors.grey.shade900;
 }

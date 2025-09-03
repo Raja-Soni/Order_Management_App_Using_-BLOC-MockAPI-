@@ -35,80 +35,126 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
         ),
         centerTitle: true,
       ),
-      body: BlocBuilder<APIDataBaseBloc, APIDataBaseStates>(
-        buildWhen: (prev, curr) => prev.dataList != curr.dataList,
-        builder: (context, apiState) {
-          if (apiState.apiStatus == Status.success)
-            return SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(15.0),
-                child: Column(
-                  spacing: 10,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    CustomText(
-                      text:
-                          "Customer/Company: ${apiState.dataList[apiState.selectedOrderIndex].customer}",
-                      textSize: 24,
-                    ),
-                    CustomText(
-                      text:
-                          "Total Order Amount: ₹${apiState.dataList[apiState.selectedOrderIndex].amount}/-",
-                      textSize: 20,
-                    ),
-                    CustomText(
-                      text:
-                          "Order Date: ${apiState.dataList[apiState.selectedOrderIndex].dateAndTime.toString().split(" ").first}",
-                      textSize: 20,
-                    ),
-                    CustomText(
-                      text:
-                          "Order Time: ${apiState.dataList[apiState.selectedOrderIndex].dateAndTime.toString().split(" ").last.split(".").first}",
-                      textSize: 20,
-                    ),
-                    BlocBuilder<NewOrderBloc, NewOrderState>(
-                      builder: (context, orderState) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            CustomText(text: "Order Status:  ", textSize: 32),
-                            Row(
+      body: BlocBuilder<DarkThemeBloc, DarkThemeState>(
+        builder: (context, darkThemeState) {
+          return BlocBuilder<APIDataBaseBloc, APIDataBaseStates>(
+            buildWhen: (prev, curr) => prev.dataList != curr.dataList,
+            builder: (context, apiState) {
+              if (apiState.apiStatus == Status.success)
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(15.0),
+                    child: Column(
+                      spacing: 10,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomContainer(
+                          borderRadius: 10,
+                          backgroundColor: darkThemeState.darkTheme
+                              ? AppColor.scaffoldDarkBackgroundColor
+                              : AppColor.scaffoldLightBackgroundColor,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              CustomText(
+                                text:
+                                    "Customer/Company: ${apiState.dataList[apiState.selectedOrderIndex].customer}",
+                                textSize: 24,
+                                textBoldness: FontWeight.bold,
+                              ),
+                              Divider(
+                                color: darkThemeState.darkTheme
+                                    ? AppColor.dividerDarkColor
+                                    : AppColor.dividerLightColor,
+                              ),
+                              Row(
+                                children: [
+                                  CustomText(
+                                    text: "Total: ",
+                                    textSize: 20,
+                                    textBoldness: FontWeight.bold,
+                                  ),
+                                  CustomText(
+                                    text:
+                                        " ₹${apiState.dataList[apiState.selectedOrderIndex].amount}/-",
+                                    textSize: 20,
+                                    textBoldness: FontWeight.bold,
+                                    textColor: darkThemeState.darkTheme
+                                        ? AppColor.amountTextDarkThemeColor
+                                        : AppColor.amountTextLightThemeColor,
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: darkThemeState.darkTheme
+                                    ? AppColor.dividerDarkColor
+                                    : AppColor.dividerLightColor,
+                              ),
+                              Row(
+                                children: [
+                                  CustomText(
+                                    text:
+                                        "Date: ${apiState.dataList[apiState.selectedOrderIndex].dateAndTime.toString().split(" ").first}",
+                                    textSize: 20,
+                                  ),
+                                  SizedBox(width: 50),
+                                  CustomText(
+                                    text:
+                                        "Time: ${apiState.dataList[apiState.selectedOrderIndex].dateAndTime.toString().split(" ").last.split(".").first}",
+                                    textSize: 20,
+                                  ),
+                                ],
+                              ),
+                              Divider(
+                                color: darkThemeState.darkTheme
+                                    ? AppColor.dividerDarkColor
+                                    : AppColor.dividerLightColor,
+                              ),
+                            ],
+                          ),
+                        ),
+                        BlocBuilder<NewOrderBloc, NewOrderState>(
+                          builder: (context, orderState) {
+                            return Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                CustomContainer(
-                                  height: 40,
-                                  width: 130,
-                                  backgroundColor:
-                                      apiState
+                                CustomText(
+                                  text: " Order Status:  ",
+                                  textSize: 30,
+                                ),
+                                Row(
+                                  children: [
+                                    CustomContainer(
+                                      height: 30,
+                                      width: 120,
+                                      backgroundColor:
+                                          apiState
+                                                  .dataList[apiState
+                                                      .selectedOrderIndex]
+                                                  .status ==
+                                              "Delivered"
+                                          ? AppColor.deliveredOrderColor
+                                          : AppColor.pendingOrderColor,
+                                      borderRadius: 20,
+                                      child: Center(
+                                        child: CustomText(
+                                          text: apiState
                                               .dataList[apiState
                                                   .selectedOrderIndex]
-                                              .status ==
-                                          "Delivered"
-                                      ? AppColor.deliveredOrderColor
-                                      : AppColor.pendingOrderColor,
-                                  borderRadius: 20,
-                                  child: Center(
-                                    child: CustomText(
-                                      text: apiState
-                                          .dataList[apiState.selectedOrderIndex]
-                                          .status
-                                          .toString(),
-                                      textSize: 20,
-                                      textColor: AppColor.whiteColor,
-                                      textBoldness: FontWeight.bold,
+                                              .status
+                                              .toString(),
+                                          textSize: 18,
+                                          textColor: AppColor.whiteColor,
+                                          textBoldness: FontWeight.bold,
+                                        ),
+                                      ),
                                     ),
-                                  ),
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    showDialog(
-                                      barrierDismissible: false,
-                                      context: context,
-                                      builder: (context) {
-                                        return BlocBuilder<
-                                          DarkThemeBloc,
-                                          DarkThemeState
-                                        >(
-                                          builder: (context, darkThemeState) {
+                                    IconButton(
+                                      onPressed: () {
+                                        showDialog(
+                                          barrierDismissible: false,
+                                          context: context,
+                                          builder: (context) {
                                             return BlocBuilder<
                                               APIDataBaseBloc,
                                               APIDataBaseStates
@@ -263,41 +309,27 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                                           },
                                         );
                                       },
-                                    );
-                                  },
-                                  icon:
-                                      BlocBuilder<
-                                        DarkThemeBloc,
-                                        DarkThemeState
-                                      >(
-                                        builder: (context, darkThemeState) {
-                                          return Icon(
-                                            Icons.edit,
-                                            size: 40,
-                                            color: darkThemeState.darkTheme
-                                                ? AppColor
-                                                      .editIconDarkThemeColor
-                                                : AppColor
-                                                      .editIconLightThemeColor,
-                                          );
-                                        },
+                                      icon: Icon(
+                                        Icons.edit,
+                                        size: 30,
+                                        color: darkThemeState.darkTheme
+                                            ? AppColor.editIconDarkThemeColor
+                                            : AppColor.editIconLightThemeColor,
                                       ),
+                                    ),
+                                  ],
                                 ),
                               ],
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                    BlocBuilder<DarkThemeBloc, DarkThemeState>(
-                      builder: (context, darkThemeState) {
-                        return Column(
+                            );
+                          },
+                        ),
+                        Column(
                           spacing: 10,
                           children: [
                             CustomContainer(
                               backgroundColor: darkThemeState.darkTheme
-                                  ? AppColor.containerDarkThemeColor
-                                  : AppColor.containerLightThemeColor,
+                                  ? AppColor.darkBlueGreyColor
+                                  : AppColor.blueGreyColor,
                               borderRadius: 10,
                               child: Padding(
                                 padding: EdgeInsets.only(
@@ -312,31 +344,46 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                                           ? 0
                                           : 40,
                                     ),
-                                    CustomText(text: "#"),
+                                    CustomText(
+                                      text: "#",
+                                      textColor: AppColor.whiteColor,
+                                    ),
                                     SizedBox(
                                       width: orientation == Orientation.portrait
                                           ? 30
                                           : 28,
                                     ),
-                                    CustomText(text: "Items"),
+                                    CustomText(
+                                      text: "Items",
+                                      textColor: AppColor.whiteColor,
+                                    ),
                                     SizedBox(
                                       width: orientation == Orientation.portrait
                                           ? 55
                                           : 302,
                                     ),
-                                    CustomText(text: "Price"),
+                                    CustomText(
+                                      text: "Price",
+                                      textColor: AppColor.whiteColor,
+                                    ),
                                     SizedBox(
                                       width: orientation == Orientation.portrait
                                           ? 17
                                           : 73,
                                     ),
-                                    CustomText(text: "Quantity"),
+                                    CustomText(
+                                      text: "Quantity",
+                                      textColor: AppColor.whiteColor,
+                                    ),
                                     SizedBox(
                                       width: orientation == Orientation.portrait
                                           ? 30
                                           : 210,
                                     ),
-                                    CustomText(text: "Total"),
+                                    CustomText(
+                                      text: "Total",
+                                      textColor: AppColor.whiteColor,
+                                    ),
                                   ],
                                 ),
                               ),
@@ -410,28 +457,37 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                               ),
                             ),
                           ],
-                        );
-                      },
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        CustomButton(
-                          height: 60,
-                          width: 120,
-                          buttonText: "Go Back",
-                          callback: () {
-                            Navigator.pop(context);
-                          },
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomButton(
+                              backgroundColor: darkThemeState.darkTheme
+                                  ? AppColor.buttonDarkThemeColor
+                                  : AppColor.buttonLightThemeColor,
+                              height: 50,
+                              width: 120,
+                              buttonText: "Go Back",
+                              callback: () {
+                                Navigator.pop(context);
+                              },
+                            ),
+                          ],
                         ),
                       ],
                     ),
-                  ],
-                ),
-              ),
-            );
-          else
-            return Center(child: CircularProgressIndicator());
+                  ),
+                );
+              else
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: darkThemeState.darkTheme
+                        ? AppColor.circularProgressDarkColor
+                        : AppColor.circularProgressLightColor,
+                  ),
+                );
+            },
+          );
         },
       ),
     );

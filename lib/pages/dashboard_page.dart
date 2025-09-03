@@ -226,7 +226,11 @@ class DashboardPage extends StatelessWidget {
                                               color: darkModeState.darkTheme
                                                   ? AppColor.darkThemeColor
                                                   : AppColor.lightThemeColor,
-                                              child: GestureDetector(
+                                              child: InkWell(
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
+                                                splashColor:
+                                                    AppColor.confirmColor,
                                                 onTap: () {
                                                   context
                                                       .read<APIDataBaseBloc>()
@@ -273,10 +277,29 @@ class DashboardPage extends StatelessWidget {
                                                             .toString()
                                                             .substring(1),
                                                   ),
-                                                  subtitle: CustomText(
-                                                    textSize: 16,
-                                                    text:
-                                                        '${dataList[index].dateAndTime.toString().split(' ').first} \n₹ ${dataList[index].amount}/-',
+                                                  subtitle: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      CustomText(
+                                                        textSize: 16,
+                                                        text:
+                                                            '${dataList[index].dateAndTime.toString().split(' ').first}',
+                                                      ),
+                                                      CustomText(
+                                                        textSize: 16,
+                                                        text:
+                                                            '₹ ${dataList[index].amount}/-',
+                                                        textColor:
+                                                            darkModeState
+                                                                .darkTheme
+                                                            ? AppColor
+                                                                  .amountTextDarkThemeColor
+                                                            : AppColor
+                                                                  .amountTextLightThemeColor,
+                                                      ),
+                                                    ],
                                                   ),
                                                   trailing: Row(
                                                     crossAxisAlignment:

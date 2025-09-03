@@ -85,8 +85,8 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                               children: [
                                 CustomContainer(
                                   backgroundColor: darkModeState.darkTheme
-                                      ? AppColor.containerDarkThemeColor
-                                      : AppColor.containerLightThemeColor,
+                                      ? AppColor.darkBlueGreyColor
+                                      : AppColor.blueGreyColor,
                                   borderRadius: 10,
                                   child: Padding(
                                     padding: EdgeInsets.only(
@@ -97,7 +97,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                     child: Row(
                                       children: [
                                         SizedBox(width: 8),
-                                        CustomText(text: "#"),
+                                        CustomText(
+                                          text: "#",
+                                          textColor: AppColor.whiteColor,
+                                        ),
                                         SizedBox(
                                           width:
                                               orientation ==
@@ -105,7 +108,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               ? 25
                                               : 28,
                                         ),
-                                        CustomText(text: "Items"),
+                                        CustomText(
+                                          text: "Items",
+                                          textColor: AppColor.whiteColor,
+                                        ),
                                         SizedBox(
                                           width:
                                               orientation ==
@@ -113,7 +119,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               ? 33
                                               : 270,
                                         ),
-                                        CustomText(text: "Price"),
+                                        CustomText(
+                                          text: "Price",
+                                          textColor: AppColor.whiteColor,
+                                        ),
                                         SizedBox(
                                           width:
                                               orientation ==
@@ -127,6 +136,7 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                                   Orientation.portrait
                                               ? "Qty"
                                               : "Quantity",
+                                          textColor: AppColor.whiteColor,
                                         ),
                                         SizedBox(
                                           width:
@@ -135,7 +145,10 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                               ? 38
                                               : 190,
                                         ),
-                                        CustomText(text: "Total"),
+                                        CustomText(
+                                          text: "Total",
+                                          textColor: AppColor.whiteColor,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -243,16 +256,21 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                 showDialog(
                                   context: context,
                                   builder: (dialogContext) {
-                                    return SingleChildScrollView(
-                                      child: AlertDialog(
-                                        title: Center(
-                                          child: CustomText(
-                                            text: "Enter Item Details",
-                                            textSize: 30,
-                                            textBoldness: FontWeight.bold,
-                                          ),
+                                    return AlertDialog(
+                                      backgroundColor: darkModeState.darkTheme
+                                          ? AppColor
+                                                .dialogBackgroundDarkThemeColor
+                                          : AppColor
+                                                .dialogBackgroundLightThemeColor,
+                                      title: Center(
+                                        child: CustomText(
+                                          text: "Enter Item Details",
+                                          textSize: 30,
+                                          textBoldness: FontWeight.bold,
                                         ),
-                                        content: Form(
+                                      ),
+                                      content: SingleChildScrollView(
+                                        child: Form(
                                           key: itemFormKey,
                                           child: Column(
                                             spacing: 10,
@@ -416,8 +434,8 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                             },
                             child: CustomContainer(
                               backgroundColor: darkModeState.darkTheme
-                                  ? AppColor.containerDarkThemeColor
-                                  : AppColor.containerLightThemeColor,
+                                  ? AppColor.darkBlueGreyColor
+                                  : AppColor.blueGreyColor,
                               borderRadius: 10,
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
@@ -426,16 +444,15 @@ class NewSalesOrderPageState extends State<NewSalesOrderPage> {
                                       MainAxisAlignment.spaceBetween,
                                   children: [
                                     CustomText(
-                                      text: "Add Item",
+                                      text: " Add Item",
                                       textBoldness: FontWeight.bold,
                                       textSize: 25,
+                                      textColor: AppColor.whiteColor,
                                     ),
                                     Icon(
                                       Icons.add,
                                       size: 35,
-                                      color: darkModeState.darkTheme
-                                          ? AppColor.iconDarkThemeColor
-                                          : AppColor.iconLightThemeColor,
+                                      color: AppColor.whiteColor,
                                     ),
                                   ],
                                 ),
