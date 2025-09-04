@@ -50,14 +50,14 @@ dev_dependencies:
 flutter_native_splash:
   color: "#42A5F5"
   color_dark: "#212121"
-  image: assets/images/erp_splash_logo.png
+  image: assets/images/order_management_splash_logo.png
   android_12:
-    image: assets/images/erp_splash_logo.png
+    image: assets/images/order_management_splash_logo.png
     icon_background_color: "#42A5F5"
     icon_background_color_dark: "#212121"
 
 flutter_launcher_icons:
-    image_path: "assets/images/erp_logo.png"
+    image_path: "assets/images/order_management_app_logo.png"
     android: "launcher_icon"
     ios: false
     remove_alpha_ios: true

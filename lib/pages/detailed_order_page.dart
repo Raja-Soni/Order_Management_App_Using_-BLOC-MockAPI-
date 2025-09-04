@@ -197,112 +197,119 @@ class DetailedOrderPageState extends State<DetailedOrderPage> {
                                                             ),
                                                           ),
                                                         )
-                                                      : Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.min,
-                                                          children: [
-                                                            Row(
-                                                              children: [
-                                                                Radio(
-                                                                  activeColor:
-                                                                      AppColor
-                                                                          .confirmColor,
-                                                                  value:
-                                                                      "Pending",
-                                                                  groupValue: apiState
-                                                                      .dataList[apiState
-                                                                          .selectedOrderIndex]
-                                                                      .status,
-                                                                  onChanged: (value) {
-                                                                    context
-                                                                        .read<
-                                                                          APIDataBaseBloc
-                                                                        >()
-                                                                        .add(
-                                                                          UpdateSelectedOrderStatus(
-                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
-                                                                            updateStatus:
-                                                                                value!,
-                                                                          ),
-                                                                        );
-                                                                  },
-                                                                ),
-                                                                CustomText(
-                                                                  text:
-                                                                      "Order Pending",
-                                                                  textSize: 20,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(width: 30),
-                                                            Row(
-                                                              children: [
-                                                                Radio(
-                                                                  activeColor:
-                                                                      AppColor
-                                                                          .confirmColor,
-                                                                  value:
-                                                                      "Delivered",
-                                                                  groupValue: apiState
-                                                                      .dataList[apiState
-                                                                          .selectedOrderIndex]
-                                                                      .status,
-                                                                  onChanged: (value) {
-                                                                    context
-                                                                        .read<
-                                                                          APIDataBaseBloc
-                                                                        >()
-                                                                        .add(
-                                                                          UpdateSelectedOrderStatus(
-                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
-                                                                            updateStatus:
-                                                                                value!,
-                                                                          ),
-                                                                        );
-                                                                  },
-                                                                ),
-                                                                CustomText(
-                                                                  text:
-                                                                      "Order Delivered",
-                                                                  textSize: 20,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                            SizedBox(width: 30),
-                                                            Row(
-                                                              children: [
-                                                                Radio(
-                                                                  activeColor:
-                                                                      AppColor
-                                                                          .confirmColor,
-                                                                  value:
-                                                                      "Cancelled",
-                                                                  groupValue: apiState
-                                                                      .dataList[apiState
-                                                                          .selectedOrderIndex]
-                                                                      .status,
-                                                                  onChanged: (value) {
-                                                                    context
-                                                                        .read<
-                                                                          APIDataBaseBloc
-                                                                        >()
-                                                                        .add(
-                                                                          UpdateSelectedOrderStatus(
-                                                                            id: apiState.dataList[apiState.selectedOrderIndex].id!,
-                                                                            updateStatus:
-                                                                                value!,
-                                                                          ),
-                                                                        );
-                                                                  },
-                                                                ),
-                                                                CustomText(
-                                                                  text:
-                                                                      "Order Cancelled",
-                                                                  textSize: 20,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ],
+                                                      : SingleChildScrollView(
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize
+                                                                    .min,
+                                                            children: [
+                                                              Row(
+                                                                children: [
+                                                                  Radio(
+                                                                    activeColor:
+                                                                        AppColor
+                                                                            .confirmColor,
+                                                                    value:
+                                                                        "Pending",
+                                                                    groupValue: apiState
+                                                                        .dataList[apiState
+                                                                            .selectedOrderIndex]
+                                                                        .status,
+                                                                    onChanged: (value) {
+                                                                      context
+                                                                          .read<
+                                                                            APIDataBaseBloc
+                                                                          >()
+                                                                          .add(
+                                                                            UpdateSelectedOrderStatus(
+                                                                              id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                              updateStatus: value!,
+                                                                            ),
+                                                                          );
+                                                                    },
+                                                                  ),
+                                                                  CustomText(
+                                                                    text:
+                                                                        "Order Pending",
+                                                                    textSize:
+                                                                        20,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Radio(
+                                                                    activeColor:
+                                                                        AppColor
+                                                                            .confirmColor,
+                                                                    value:
+                                                                        "Delivered",
+                                                                    groupValue: apiState
+                                                                        .dataList[apiState
+                                                                            .selectedOrderIndex]
+                                                                        .status,
+                                                                    onChanged: (value) {
+                                                                      context
+                                                                          .read<
+                                                                            APIDataBaseBloc
+                                                                          >()
+                                                                          .add(
+                                                                            UpdateSelectedOrderStatus(
+                                                                              id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                              updateStatus: value!,
+                                                                            ),
+                                                                          );
+                                                                    },
+                                                                  ),
+                                                                  CustomText(
+                                                                    text:
+                                                                        "Order Delivered",
+                                                                    textSize:
+                                                                        20,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              SizedBox(
+                                                                width: 30,
+                                                              ),
+                                                              Row(
+                                                                children: [
+                                                                  Radio(
+                                                                    activeColor:
+                                                                        AppColor
+                                                                            .confirmColor,
+                                                                    value:
+                                                                        "Cancelled",
+                                                                    groupValue: apiState
+                                                                        .dataList[apiState
+                                                                            .selectedOrderIndex]
+                                                                        .status,
+                                                                    onChanged: (value) {
+                                                                      context
+                                                                          .read<
+                                                                            APIDataBaseBloc
+                                                                          >()
+                                                                          .add(
+                                                                            UpdateSelectedOrderStatus(
+                                                                              id: apiState.dataList[apiState.selectedOrderIndex].id!,
+                                                                              updateStatus: value!,
+                                                                            ),
+                                                                          );
+                                                                    },
+                                                                  ),
+                                                                  CustomText(
+                                                                    text:
+                                                                        "Order Cancelled",
+                                                                    textSize:
+                                                                        20,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                            ],
+                                                          ),
                                                         ),
                                                   actions:
                                                       apiState.apiStatus ==
