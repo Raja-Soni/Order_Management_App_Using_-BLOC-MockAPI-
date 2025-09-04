@@ -44,5 +44,6 @@ https://github.com/user-attachments/assets/d234366b-ef37-4d4d-8586-7bf25554fd39
 
 ---
 
-**Brief Summary: **
+**Brief Summary**
+
 An Android application built with Flutter for managing orders efficiently. It supports order listing, creation, deletion, and advanced filtering (All, Today’s, Pending, Delivered, Cancelled) with real-time status updates. Features include detailed order views, a dynamic New Order page with itemized lists and auto-calculated totals, daily sales summaries, one-time high-value order alerts, dark mode persistence, and clean architecture using BLoC with Mock API integration.
