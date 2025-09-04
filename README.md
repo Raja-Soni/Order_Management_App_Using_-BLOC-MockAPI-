@@ -1,4 +1,4 @@
-# 📦 Order Management App (Flutter - Android)
+# 📦 Order Management App (Flutter + Dart + BLoc + Shared_Preferences)
 
 https://github.com/user-attachments/assets/d234366b-ef37-4d4d-8586-7bf25554fd39
 
